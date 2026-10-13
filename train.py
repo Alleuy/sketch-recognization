@@ -1,4 +1,4 @@
-# train_gpu_aug.py
+# train_v2.py
 import os
 import sys
 import json
@@ -7,7 +7,6 @@ import random
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 from torchvision.transforms import v2
 import matplotlib.pyplot as plt
@@ -19,25 +18,25 @@ DATA_DIR = "quickdraw_100class"
 NPZ_PATH = os.path.join(DATA_DIR, "quickdraw_100class.npz")
 CLASS_JSON = os.path.join(DATA_DIR, "class_names.json")
 
-BATCH_SIZE = 512          # GPU 上保持 512；显存宽松可上 1024
-EPOCHS = 50
-LR = 2e-3                 # batch 512 配 2e-3
+BATCH_SIZE = 512
+EPOCHS = 80               # Cosine 需要提前知道总 epoch，设得比实际会停的多一点
+LR = 2e-3
 WEIGHT_DECAY = 1e-4
 LABEL_SMOOTHING = 0.1
 
-NUM_WORKERS = 0           # 数据在内存里，0 最快、最省内存
+NUM_WORKERS = 0
 PIN_MEMORY = True
 SEED = 42
 
-PATIENCE_LR = 3
-PATIENCE_STOP = 8
+PATIENCE_STOP = 15        # Cosine 会一直下降，EarlyStopping 可以给宽一点
+ETA_MIN = 1e-5            # Cosine 末端 lr
 
-OUT_MODEL = "best_model.pt"
-OUT_HISTORY = "history.json"
-OUT_CURVE = "training_curve.png"
-OUT_CM = "confusion_matrix.png"
+OUT_MODEL = "best_model_v2.pt"
+OUT_HISTORY = "history_v2.json"
+OUT_CURVE = "training_curve_v2.png"
+OUT_CM = "confusion_matrix_v2.png"
 
-AMP = True                # RTX 20 系及以上开；老显卡改 False
+AMP = True
 
 
 # ==================== 随机种子 ====================
@@ -48,12 +47,8 @@ def set_seed(seed):
     torch.cuda.manual_seed_all(seed)
 
 
-# ==================== Dataset（只做最小转换，不再做增强）====================
+# ==================== Dataset ====================
 class QuickDrawDataset(Dataset):
-    """
-    X: (N,28,28) uint8 [0,255]
-    y: (N,)      int64
-    """
     def __init__(self, X, y):
         self.X = X
         self.y = y
@@ -62,43 +57,45 @@ class QuickDrawDataset(Dataset):
         return len(self.y)
 
     def __getitem__(self, idx):
-        # 只做 uint8 -> float [0,1] 的形状转换，微秒级
         img = torch.from_numpy(self.X[idx]).float().div_(255.0).unsqueeze(0)
         return img, int(self.y[idx])
 
 
-# ==================== 模型 ====================
+# ==================== 模型（加宽版 64/128/256）====================
 class QuickDrawCNN(nn.Module):
-    """3 个 block，每块两个 3x3 conv + BN + ReLU；两次 MaxPool；GAP 分类头"""
+    """
+    加宽版：32/64/128 -> 64/128/256
+    参数量约 1.2 M
+    """
     def __init__(self, num_classes=100):
         super().__init__()
         self.features = nn.Sequential(
             # Block 1: 28 -> 14
-            nn.Conv2d(1, 32, 3, padding=1, bias=False),
-            nn.BatchNorm2d(32), nn.ReLU(inplace=True),
-            nn.Conv2d(32, 32, 3, padding=1, bias=False),
-            nn.BatchNorm2d(32), nn.ReLU(inplace=True),
-            nn.MaxPool2d(2), nn.Dropout2d(0.10),
-
-            # Block 2: 14 -> 7
-            nn.Conv2d(32, 64, 3, padding=1, bias=False),
+            nn.Conv2d(1, 64, 3, padding=1, bias=False),
             nn.BatchNorm2d(64), nn.ReLU(inplace=True),
             nn.Conv2d(64, 64, 3, padding=1, bias=False),
             nn.BatchNorm2d(64), nn.ReLU(inplace=True),
-            nn.MaxPool2d(2), nn.Dropout2d(0.15),
+            nn.MaxPool2d(2), nn.Dropout2d(0.10),
 
-            # Block 3: 保持 7x7
+            # Block 2: 14 -> 7
             nn.Conv2d(64, 128, 3, padding=1, bias=False),
             nn.BatchNorm2d(128), nn.ReLU(inplace=True),
             nn.Conv2d(128, 128, 3, padding=1, bias=False),
             nn.BatchNorm2d(128), nn.ReLU(inplace=True),
+            nn.MaxPool2d(2), nn.Dropout2d(0.15),
+
+            # Block 3: 保持 7x7
+            nn.Conv2d(128, 256, 3, padding=1, bias=False),
+            nn.BatchNorm2d(256), nn.ReLU(inplace=True),
+            nn.Conv2d(256, 256, 3, padding=1, bias=False),
+            nn.BatchNorm2d(256), nn.ReLU(inplace=True),
             nn.Dropout2d(0.20),
         )
         self.head = nn.Sequential(
             nn.AdaptiveAvgPool2d(1),
             nn.Flatten(),
             nn.Dropout(0.40),
-            nn.Linear(128, num_classes),
+            nn.Linear(256, num_classes),
         )
         self._init_weights()
 
@@ -119,16 +116,11 @@ class QuickDrawCNN(nn.Module):
 
 # ==================== GPU 增强 ====================
 def build_gpu_augment():
-    """
-    用 torchvision.transforms.v2，可以直接吃 GPU 上的 batch 张量。
-    输入: (B,1,28,28) float [0,1] on cuda
-    输出: 同形状，同设备
-    """
     return v2.Compose([
         v2.RandomAffine(
-            degrees=10,                          # ±10°
-            translate=(0.08, 0.08),              # ±8%
-            scale=(0.92, 1.08),                  # ±8%
+            degrees=10,
+            translate=(0.08, 0.08),
+            scale=(0.92, 1.08),
             interpolation=v2.InterpolationMode.NEAREST,
             fill=0,
         ),
@@ -144,8 +136,6 @@ def train_one_epoch(model, loader, optimizer, criterion, scaler,
     for x, y in loader:
         x = x.to(device, non_blocking=True)
         y = y.to(device, non_blocking=True)
-
-        # ★ 增强搬到 GPU：整批一次性做，不占 CPU
         x = augment_gpu(x)
 
         optimizer.zero_grad(set_to_none=True)
@@ -192,7 +182,6 @@ def evaluate(model, loader, criterion, device, use_amp):
 
 # ==================== 主流程 ====================
 def main():
-    # 打印环境信息，便于排查
     print("=" * 60)
     print("Python:", sys.executable)
     print("Torch :", torch.__version__)
@@ -222,7 +211,6 @@ def main():
     print(f"类别数: {K}")
     print(f"train: {X_train.shape}  val: {X_val.shape}  test: {X_test.shape}")
 
-    # ----- Dataset（不做 CPU 增强）-----
     train_ds = QuickDrawDataset(X_train, y_train)
     val_ds   = QuickDrawDataset(X_val,   y_val)
     test_ds  = QuickDrawDataset(X_test,  y_test)
@@ -234,7 +222,6 @@ def main():
     val_loader   = DataLoader(val_ds,   batch_size=BATCH_SIZE * 2, shuffle=False, **common)
     test_loader  = DataLoader(test_ds,  batch_size=BATCH_SIZE * 2, shuffle=False, **common)
 
-    # ----- GPU 增强 -----
     augment_gpu = build_gpu_augment()
 
     # ----- 模型 -----
@@ -246,10 +233,12 @@ def main():
     criterion = nn.CrossEntropyLoss(label_smoothing=LABEL_SMOOTHING)
     optimizer = torch.optim.AdamW(model.parameters(), lr=LR,
                                   weight_decay=WEIGHT_DECAY)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer, mode="min", factor=0.5,
-        patience=PATIENCE_LR, min_lr=1e-5,
+
+    # ★ Cosine Schedule（替换 ReduceLROnPlateau）
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+        optimizer, T_max=EPOCHS, eta_min=ETA_MIN,
     )
+
     scaler = torch.amp.GradScaler(device.type, enabled=use_amp)
 
     # ----- 训练 -----
@@ -266,7 +255,9 @@ def main():
             device, use_amp, augment_gpu)
         val_loss, val_acc = evaluate(
             model, val_loader, criterion, device, use_amp)
-        scheduler.step(val_loss)
+
+        # ★ Cosine：每 epoch 调一次，不传参数
+        scheduler.step()
         cur_lr = optimizer.param_groups[0]["lr"]
 
         history["train_loss"].append(train_loss)
@@ -301,8 +292,8 @@ def main():
     with open(OUT_HISTORY, "w", encoding="utf-8") as f:
         json.dump(history, f, indent=2)
 
-    # ----- 画训练曲线 -----
-    fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+    # ----- 画训练曲线（多画一张 lr 曲线，方便看 Cosine 效果）-----
+    fig, axes = plt.subplots(1, 3, figsize=(18, 4))
     axes[0].plot(history["train_loss"], label="train")
     axes[0].plot(history["val_loss"], label="val")
     axes[0].set_title("Loss"); axes[0].set_xlabel("epoch")
@@ -313,11 +304,16 @@ def main():
     axes[1].set_title("Accuracy"); axes[1].set_xlabel("epoch")
     axes[1].legend(); axes[1].grid(alpha=0.3)
 
+    axes[2].plot(history["lr"])
+    axes[2].set_title("Learning Rate (Cosine)")
+    axes[2].set_xlabel("epoch"); axes[2].set_yscale("log")
+    axes[2].grid(alpha=0.3)
+
     plt.tight_layout()
     plt.savefig(OUT_CURVE, dpi=120)
     print(f"\n训练曲线已保存: {OUT_CURVE}")
 
-    # ----- 加载最佳模型评估 test -----
+    # ----- 评估 test -----
     print("\n加载最佳模型评估 test...")
     ckpt = torch.load(OUT_MODEL, map_location=device, weights_only=False)
     model.load_state_dict(ckpt["model_state"])
@@ -344,6 +340,11 @@ def main():
     print("\n最差的 20 个类别（对角线准确率 / recall）：")
     worst_idx = np.argsort(diag)[:20]
     for i in worst_idx:
+        print(f"  {class_names[i]:>22s}  {diag[i]:.3f}")
+
+    print("\n最好的 10 个类别：")
+    best_idx = np.argsort(diag)[-10:][::-1]
+    for i in best_idx:
         print(f"  {class_names[i]:>22s}  {diag[i]:.3f}")
 
     plt.figure(figsize=(14, 12))
