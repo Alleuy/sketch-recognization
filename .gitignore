@@ -1,0 +1,20 @@
+# IDEA 配置文件夹，不要提交
+.idea/
+
+# 模型权重
+*.pt
+*.pth
+
+# 数据集，npz 很大，不要上传github
+quickdraw_100class/
+
+# Python缓存
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 日志、环境
+*.log
+.env
+.venv/
