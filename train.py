@@ -1,13 +1,15 @@
-# Time：2026/10/12 18:43
+# train_gpu_aug.py
 import os
+import sys
 import json
 import time
+import random
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms
+from torchvision.transforms import v2
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix
 
@@ -17,58 +19,52 @@ DATA_DIR = "quickdraw_100class"
 NPZ_PATH = os.path.join(DATA_DIR, "quickdraw_100class.npz")
 CLASS_JSON = os.path.join(DATA_DIR, "class_names.json")
 
-BATCH_SIZE = 512          # 显存不够就降 256 / 128
+BATCH_SIZE = 512          # GPU 上保持 512；显存宽松可上 1024
 EPOCHS = 50
-LR = 2e-3                 # batch 512 配 2e-3；batch 减半时 lr 也减半
+LR = 2e-3                 # batch 512 配 2e-3
 WEIGHT_DECAY = 1e-4
 LABEL_SMOOTHING = 0.1
 
-NUM_WORKERS = 0           # Windows 上如果报错就改成 0
+NUM_WORKERS = 0           # 数据在内存里，0 最快、最省内存
 PIN_MEMORY = True
 SEED = 42
 
-PATIENCE_LR = 3           # ReduceLROnPlateau
-PATIENCE_STOP = 8         # EarlyStopping
+PATIENCE_LR = 3
+PATIENCE_STOP = 8
 
 OUT_MODEL = "best_model.pt"
 OUT_HISTORY = "history.json"
 OUT_CURVE = "training_curve.png"
 OUT_CM = "confusion_matrix.png"
 
-AMP = True                # 混合精度；老显卡（算力<7.0）请改 False
+AMP = True                # RTX 20 系及以上开；老显卡改 False
 
 
 # ==================== 随机种子 ====================
 def set_seed(seed):
-    import random
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
 
 
-# ==================== Dataset ====================
+# ==================== Dataset（只做最小转换，不再做增强）====================
 class QuickDrawDataset(Dataset):
     """
     X: (N,28,28) uint8 [0,255]
     y: (N,)      int64
-    transform: 只对训练集传增强
     """
-    def __init__(self, X, y, transform=None):
+    def __init__(self, X, y):
         self.X = X
         self.y = y
-        self.transform = transform
 
     def __len__(self):
         return len(self.y)
 
     def __getitem__(self, idx):
-        # 转 float32 [0,1]，形状 (1,28,28)
+        # 只做 uint8 -> float [0,1] 的形状转换，微秒级
         img = torch.from_numpy(self.X[idx]).float().div_(255.0).unsqueeze(0)
-        label = int(self.y[idx])
-        if self.transform is not None:
-            img = self.transform(img)
-        return img, label
+        return img, int(self.y[idx])
 
 
 # ==================== 模型 ====================
@@ -121,14 +117,36 @@ class QuickDrawCNN(nn.Module):
         return self.head(self.features(x))
 
 
+# ==================== GPU 增强 ====================
+def build_gpu_augment():
+    """
+    用 torchvision.transforms.v2，可以直接吃 GPU 上的 batch 张量。
+    输入: (B,1,28,28) float [0,1] on cuda
+    输出: 同形状，同设备
+    """
+    return v2.Compose([
+        v2.RandomAffine(
+            degrees=10,                          # ±10°
+            translate=(0.08, 0.08),              # ±8%
+            scale=(0.92, 1.08),                  # ±8%
+            interpolation=v2.InterpolationMode.NEAREST,
+            fill=0,
+        ),
+    ])
+
+
 # ==================== 单 epoch 训练 ====================
-def train_one_epoch(model, loader, optimizer, criterion, scaler, device, use_amp):
+def train_one_epoch(model, loader, optimizer, criterion, scaler,
+                    device, use_amp, augment_gpu):
     model.train()
     total_loss, total_correct, total = 0.0, 0, 0
 
     for x, y in loader:
         x = x.to(device, non_blocking=True)
         y = y.to(device, non_blocking=True)
+
+        # ★ 增强搬到 GPU：整批一次性做，不占 CPU
+        x = augment_gpu(x)
 
         optimizer.zero_grad(set_to_none=True)
         with torch.amp.autocast("cuda", enabled=use_amp):
@@ -174,6 +192,12 @@ def evaluate(model, loader, criterion, device, use_amp):
 
 # ==================== 主流程 ====================
 def main():
+    # 打印环境信息，便于排查
+    print("=" * 60)
+    print("Python:", sys.executable)
+    print("Torch :", torch.__version__)
+    print("=" * 60)
+
     set_seed(SEED)
 
     # ----- 设备 -----
@@ -181,7 +205,7 @@ def main():
     if device.type == "cuda":
         print(f"✅ GPU: {torch.cuda.get_device_name(0)}")
         print(f"   CUDA: {torch.version.cuda}")
-        torch.backends.cudnn.benchmark = True   # 输入尺寸固定，开这个提速
+        torch.backends.cudnn.benchmark = True
     else:
         print("⚠️  未检测到 GPU，使用 CPU 训练会非常慢")
     use_amp = AMP and device.type == "cuda"
@@ -198,39 +222,26 @@ def main():
     print(f"类别数: {K}")
     print(f"train: {X_train.shape}  val: {X_val.shape}  test: {X_test.shape}")
 
-    # ----- 增强（只对训练集）-----
-    # RandomAffine 一次覆盖 平移+缩放+旋转，fill=0 补黑边
-    train_tf = transforms.Compose([
-        transforms.RandomAffine(
-            degrees=10,                # ±10°
-            translate=(0.08, 0.08),    # 最多平移 ±8%
-            scale=(0.92, 1.08),        # 缩放 ±8%
-            interpolation=transforms.InterpolationMode.NEAREST,
-            fill=0,
-        ),
-    ])
+    # ----- Dataset（不做 CPU 增强）-----
+    train_ds = QuickDrawDataset(X_train, y_train)
+    val_ds   = QuickDrawDataset(X_val,   y_val)
+    test_ds  = QuickDrawDataset(X_test,  y_test)
 
-    train_ds = QuickDrawDataset(X_train, y_train, transform=train_tf)
-    val_ds   = QuickDrawDataset(X_val,   y_val,   transform=None)
-    test_ds  = QuickDrawDataset(X_test,  y_test,  transform=None)
-
-    common = dict(
-        num_workers=NUM_WORKERS,
-        pin_memory=(device.type == "cuda"),
-    )
+    common = dict(num_workers=NUM_WORKERS,
+                  pin_memory=(device.type == "cuda"))
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True,
-                              drop_last=True,
-                              persistent_workers=(NUM_WORKERS > 0),
-                              **common)
-    val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE * 2, shuffle=False,
-                            **common)
-    test_loader = DataLoader(test_ds, batch_size=BATCH_SIZE * 2, shuffle=False,
-                             **common)
+                              drop_last=True, **common)
+    val_loader   = DataLoader(val_ds,   batch_size=BATCH_SIZE * 2, shuffle=False, **common)
+    test_loader  = DataLoader(test_ds,  batch_size=BATCH_SIZE * 2, shuffle=False, **common)
+
+    # ----- GPU 增强 -----
+    augment_gpu = build_gpu_augment()
 
     # ----- 模型 -----
     model = QuickDrawCNN(K).to(device)
     n_params = sum(p.numel() for p in model.parameters())
     print(f"\n模型参数量: {n_params/1e6:.2f} M")
+    print(f"模型设备: {next(model.parameters()).device}")
 
     criterion = nn.CrossEntropyLoss(label_smoothing=LABEL_SMOOTHING)
     optimizer = torch.optim.AdamW(model.parameters(), lr=LR,
@@ -239,7 +250,7 @@ def main():
         optimizer, mode="min", factor=0.5,
         patience=PATIENCE_LR, min_lr=1e-5,
     )
-    scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
+    scaler = torch.amp.GradScaler(device.type, enabled=use_amp)
 
     # ----- 训练 -----
     history = {"train_loss": [], "train_acc": [],
@@ -251,7 +262,8 @@ def main():
     for epoch in range(1, EPOCHS + 1):
         t0 = time.time()
         train_loss, train_acc = train_one_epoch(
-            model, train_loader, optimizer, criterion, scaler, device, use_amp)
+            model, train_loader, optimizer, criterion, scaler,
+            device, use_amp, augment_gpu)
         val_loss, val_acc = evaluate(
             model, val_loader, criterion, device, use_amp)
         scheduler.step(val_loss)
@@ -268,7 +280,6 @@ def main():
               f"val {val_loss:.4f}/{val_acc:.4f} | "
               f"lr {cur_lr:.2e} | {time.time()-t0:.1f}s")
 
-        # checkpoint：保存 val_acc 最高的模型
         if val_acc > best_val_acc:
             best_val_acc = val_acc
             torch.save({
