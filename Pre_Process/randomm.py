@@ -3,7 +3,7 @@ import random
 random.seed(2026)
 
 # 读取本地 categories.txt
-with open("../categories.txt", "r", encoding="utf-8") as f:
+with open("categories.txt", "r", encoding="utf-8") as f:
     lines = f.readlines()
 
 # 清理空行、前后空格
@@ -13,7 +13,7 @@ all_categories = [line.strip() for line in lines if line.strip()]
 selected_categories = random.sample(all_categories, 100)
 
 # 写入新txt文件
-with open("../random_100_categories.txt", "w", encoding="utf-8") as out_f:
+with open("random_100_categories.txt", "w", encoding="utf-8") as out_f:
     for item in selected_categories:
         out_f.write(item + "\n")
 
