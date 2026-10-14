@@ -6,10 +6,10 @@
 *.pth
 
 # 数据集，npz 很大，不要上传github
-quickdraw_100class/
+quickdraw_100class*/
 
 # 模型的历史数据，优化模型中
-history_data
+history_data/
 
 # Python缓存
 __pycache__/
