@@ -14,14 +14,15 @@ PROXY_HTTPS = "http://127.0.0.1:7897"
 PROXIES = {"http": PROXY_HTTP, "https": PROXY_HTTPS}
 
 SAMPLES_PER_CLASS = 5000
-TARGET_SIZE = 28
+TARGET_SIZE = 64          # ← 改这里：28 -> 64
 SRC_SIZE = 256
-LINE_THICKNESS = 1
+LINE_THICKNESS = 2        # ← 64x64 下线条更清晰；想要极细可改回 1
 
 TRAIN_RATIO, VAL_RATIO, TEST_RATIO = 0.8, 0.1, 0.1
 RANDOM_SEED = 42
 
-OUTPUT_DIR = "quickdraw_100class"
+# ← 换一个输出目录，避免和之前 28x28 的缓存/数据混在一起
+OUTPUT_DIR = "quickdraw_100class_64"
 PER_CLASS_DIR = os.path.join(OUTPUT_DIR, "per_class")
 DONE_FILE = os.path.join(OUTPUT_DIR, "_done.json")
 os.makedirs(PER_CLASS_DIR, exist_ok=True)
@@ -72,8 +73,9 @@ def class_filename(idx, class_name):
 
 # ==================== 渲染 ====================
 def render_drawing(drawing, size=TARGET_SIZE):
+    """把 QuickDraw 的 stroke 序列渲染成 size×size 的 uint8 灰度图。"""
     img = np.zeros((size, size), dtype=np.uint8)
-    scale = size / SRC_SIZE
+    scale = size / SRC_SIZE          # 256 -> size
 
     for stroke in drawing:
         if not isinstance(stroke, (list, tuple)) or len(stroke) != 2:
@@ -161,7 +163,6 @@ def stage_download(class_names):
         fname = class_filename(idx, cls)
         fpath = os.path.join(PER_CLASS_DIR, fname)
 
-        # 先写 tmp，再原子 rename，避免中断留下半个损坏文件
         tmp_path = fpath + ".tmp.npz"
         np.savez_compressed(tmp_path, X=arr)
         os.replace(tmp_path, fpath)
@@ -174,7 +175,6 @@ def stage_download(class_names):
 # ==================== 阶段 2：合并 + 划分 + 保存最终 npz ====================
 def stage_merge_and_split(class_names):
     done = load_done()
-    # 按索引顺序读，保证类别顺序 = class_names 顺序
     keys = sorted(done.keys(), key=lambda x: int(x))
 
     X_list, y_list, kept_classes = [], [], []
@@ -209,7 +209,7 @@ def stage_merge_and_split(class_names):
     )
     print(f"train: {X_train.shape}  val: {X_val.shape}  test: {X_test.shape}")
 
-    npz_path = os.path.join(OUTPUT_DIR, "quickdraw_100class.npz")
+    npz_path = os.path.join(OUTPUT_DIR, "quickdraw_100class_64.npz")
     tmp_path = npz_path + ".tmp.npz"
     np.savez_compressed(
         tmp_path,
