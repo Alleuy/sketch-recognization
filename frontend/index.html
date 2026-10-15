@@ -722,7 +722,7 @@ document.querySelectorAll(".mode-btn").forEach(btn=>{
                 document.getElementById("modeHint").innerHTML =
                     `当前关卡：<span id="lid">${lv.id}</span>｜请画：` +
                     `<span id="targetZh">${lv.display_name}</span>` +
-                    `（<span id="targetEn">${lv.class_name}）`;
+                    `（<span id="targetEn">${lv.class_name}</span>）`;
             }
             loadLevel(currentLevelId);
         }else if(currentMode === "practice"){

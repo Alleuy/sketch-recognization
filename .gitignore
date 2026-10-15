@@ -23,3 +23,7 @@ __pycache__/
 *.log
 .env
 .venv/
+
+# 后端运行时数据库
+backend/quickdraw.db
+backend/test_*.db
