@@ -1,0 +1,402 @@
+{
+  "hand": {
+    "recall": 0.99,
+    "difficulty": 1
+  },
+  "wine glass": {
+    "recall": 0.975,
+    "difficulty": 1
+  },
+  "megaphone": {
+    "recall": 0.975,
+    "difficulty": 1
+  },
+  "windmill": {
+    "recall": 0.975,
+    "difficulty": 1
+  },
+  "smiley face": {
+    "recall": 0.975,
+    "difficulty": 1
+  },
+  "angel": {
+    "recall": 0.97,
+    "difficulty": 1
+  },
+  "hot air balloon": {
+    "recall": 0.965,
+    "difficulty": 1
+  },
+  "school bus": {
+    "recall": 0.96,
+    "difficulty": 1
+  },
+  "star": {
+    "recall": 0.96,
+    "difficulty": 1
+  },
+  "snowman": {
+    "recall": 0.955,
+    "difficulty": 1
+  },
+  "stairs": {
+    "recall": 0.955,
+    "difficulty": 1
+  },
+  "calculator": {
+    "recall": 0.95,
+    "difficulty": 1
+  },
+  "triangle": {
+    "recall": 0.95,
+    "difficulty": 1
+  },
+  "carrot": {
+    "recall": 0.95,
+    "difficulty": 1
+  },
+  "skull": {
+    "recall": 0.95,
+    "difficulty": 1
+  },
+  "picture frame": {
+    "recall": 0.945,
+    "difficulty": 2
+  },
+  "hot dog": {
+    "recall": 0.945,
+    "difficulty": 2
+  },
+  "fireplace": {
+    "recall": 0.94,
+    "difficulty": 2
+  },
+  "tornado": {
+    "recall": 0.94,
+    "difficulty": 2
+  },
+  "pizza": {
+    "recall": 0.94,
+    "difficulty": 2
+  },
+  "airplane": {
+    "recall": 0.94,
+    "difficulty": 2
+  },
+  "jacket": {
+    "recall": 0.94,
+    "difficulty": 2
+  },
+  "apple": {
+    "recall": 0.94,
+    "difficulty": 2
+  },
+  "shorts": {
+    "recall": 0.94,
+    "difficulty": 2
+  },
+  "bucket": {
+    "recall": 0.935,
+    "difficulty": 2
+  },
+  "sun": {
+    "recall": 0.935,
+    "difficulty": 2
+  },
+  "snail": {
+    "recall": 0.935,
+    "difficulty": 2
+  },
+  "bed": {
+    "recall": 0.935,
+    "difficulty": 2
+  },
+  "wine bottle": {
+    "recall": 0.93,
+    "difficulty": 2
+  },
+  "rollerskates": {
+    "recall": 0.93,
+    "difficulty": 2
+  },
+  "bowtie": {
+    "recall": 0.93,
+    "difficulty": 2
+  },
+  "hourglass": {
+    "recall": 0.93,
+    "difficulty": 2
+  },
+  "horse": {
+    "recall": 0.925,
+    "difficulty": 2
+  },
+  "eyeglasses": {
+    "recall": 0.925,
+    "difficulty": 2
+  },
+  "jail": {
+    "recall": 0.925,
+    "difficulty": 2
+  },
+  "power outlet": {
+    "recall": 0.92,
+    "difficulty": 2
+  },
+  "grass": {
+    "recall": 0.92,
+    "difficulty": 2
+  },
+  "cactus": {
+    "recall": 0.915,
+    "difficulty": 2
+  },
+  "sea turtle": {
+    "recall": 0.915,
+    "difficulty": 2
+  },
+  "teapot": {
+    "recall": 0.915,
+    "difficulty": 2
+  },
+  "purse": {
+    "recall": 0.91,
+    "difficulty": 2
+  },
+  "cello": {
+    "recall": 0.91,
+    "difficulty": 2
+  },
+  "flamingo": {
+    "recall": 0.91,
+    "difficulty": 2
+  },
+  "toilet": {
+    "recall": 0.905,
+    "difficulty": 2
+  },
+  "backpack": {
+    "recall": 0.905,
+    "difficulty": 2
+  },
+  "grapes": {
+    "recall": 0.905,
+    "difficulty": 2
+  },
+  "see saw": {
+    "recall": 0.905,
+    "difficulty": 2
+  },
+  "pear": {
+    "recall": 0.9,
+    "difficulty": 2
+  },
+  "popsicle": {
+    "recall": 0.9,
+    "difficulty": 2
+  },
+  "skyscraper": {
+    "recall": 0.9,
+    "difficulty": 2
+  },
+  "leaf": {
+    "recall": 0.9,
+    "difficulty": 2
+  },
+  "sink": {
+    "recall": 0.895,
+    "difficulty": 3
+  },
+  "submarine": {
+    "recall": 0.895,
+    "difficulty": 3
+  },
+  "owl": {
+    "recall": 0.895,
+    "difficulty": 3
+  },
+  "lion": {
+    "recall": 0.89,
+    "difficulty": 3
+  },
+  "sword": {
+    "recall": 0.89,
+    "difficulty": 3
+  },
+  "key": {
+    "recall": 0.885,
+    "difficulty": 3
+  },
+  "tooth": {
+    "recall": 0.885,
+    "difficulty": 3
+  },
+  "shark": {
+    "recall": 0.88,
+    "difficulty": 3
+  },
+  "speedboat": {
+    "recall": 0.88,
+    "difficulty": 3
+  },
+  "bulldozer": {
+    "recall": 0.88,
+    "difficulty": 3
+  },
+  "tractor": {
+    "recall": 0.88,
+    "difficulty": 3
+  },
+  "monkey": {
+    "recall": 0.875,
+    "difficulty": 3
+  },
+  "rake": {
+    "recall": 0.875,
+    "difficulty": 3
+  },
+  "pencil": {
+    "recall": 0.87,
+    "difficulty": 3
+  },
+  "tent": {
+    "recall": 0.865,
+    "difficulty": 3
+  },
+  "wristwatch": {
+    "recall": 0.865,
+    "difficulty": 3
+  },
+  "cannon": {
+    "recall": 0.86,
+    "difficulty": 3
+  },
+  "paintbrush": {
+    "recall": 0.86,
+    "difficulty": 3
+  },
+  "shovel": {
+    "recall": 0.86,
+    "difficulty": 3
+  },
+  "vase": {
+    "recall": 0.85,
+    "difficulty": 3
+  },
+  "bracelet": {
+    "recall": 0.85,
+    "difficulty": 3
+  },
+  "mailbox": {
+    "recall": 0.845,
+    "difficulty": 4
+  },
+  "knife": {
+    "recall": 0.84,
+    "difficulty": 4
+  },
+  "stereo": {
+    "recall": 0.84,
+    "difficulty": 4
+  },
+  "syringe": {
+    "recall": 0.835,
+    "difficulty": 4
+  },
+  "canoe": {
+    "recall": 0.83,
+    "difficulty": 4
+  },
+  "flying saucer": {
+    "recall": 0.83,
+    "difficulty": 4
+  },
+  "toothbrush": {
+    "recall": 0.83,
+    "difficulty": 4
+  },
+  "animal migration": {
+    "recall": 0.825,
+    "difficulty": 4
+  },
+  "moustache": {
+    "recall": 0.825,
+    "difficulty": 4
+  },
+  "clarinet": {
+    "recall": 0.825,
+    "difficulty": 4
+  },
+  "peas": {
+    "recall": 0.825,
+    "difficulty": 4
+  },
+  "shoe": {
+    "recall": 0.825,
+    "difficulty": 4
+  },
+  "watermelon": {
+    "recall": 0.81,
+    "difficulty": 4
+  },
+  "tiger": {
+    "recall": 0.805,
+    "difficulty": 4
+  },
+  "piano": {
+    "recall": 0.8,
+    "difficulty": 4
+  },
+  "bread": {
+    "recall": 0.795,
+    "difficulty": 4
+  },
+  "roller coaster": {
+    "recall": 0.795,
+    "difficulty": 4
+  },
+  "underwear": {
+    "recall": 0.79,
+    "difficulty": 4
+  },
+  "oven": {
+    "recall": 0.785,
+    "difficulty": 4
+  },
+  "elephant": {
+    "recall": 0.785,
+    "difficulty": 4
+  },
+  "snake": {
+    "recall": 0.735,
+    "difficulty": 5
+  },
+  "mosquito": {
+    "recall": 0.72,
+    "difficulty": 5
+  },
+  "radio": {
+    "recall": 0.72,
+    "difficulty": 5
+  },
+  "steak": {
+    "recall": 0.695,
+    "difficulty": 5
+  },
+  "camouflage": {
+    "recall": 0.63,
+    "difficulty": 5
+  },
+  "raccoon": {
+    "recall": 0.62,
+    "difficulty": 5
+  },
+  "squiggle": {
+    "recall": 0.6,
+    "difficulty": 5
+  },
+  "garden hose": {
+    "recall": 0.38,
+    "difficulty": 5
+  }
+}
