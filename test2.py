@@ -2,8 +2,8 @@
 import numpy as np, json
 import matplotlib.pyplot as plt
 
-data = np.load("quickdraw_100class/quickdraw_100class.npz")
-class_names = json.load(open("quickdraw_100class/class_names.json", encoding="utf-8"))
+data = np.load("history_data/quickdraw_100class/quickdraw_100class.npz")
+class_names = json.load(open("history_data/quickdraw_100class/class_names.json", encoding="utf-8"))
 X_train, y_train = data["X_train"], data["y_train"]
 
 fig, axes = plt.subplots(4, 8, figsize=(16, 8))

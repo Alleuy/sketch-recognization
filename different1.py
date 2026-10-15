@@ -1,9 +1,9 @@
 # Time：2026/10/13 23:47
 import numpy as np, json, matplotlib.pyplot as plt
 
-data = np.load("quickdraw_100class/quickdraw_100class.npz")
+data = np.load("history_data/quickdraw_100class/quickdraw_100class.npz")
 X, y = data["X_train"], data["y_train"]
-class_names = json.load(open("quickdraw_100class/class_names.json", encoding="utf-8"))
+class_names = json.load(open("history_data/quickdraw_100class/class_names.json", encoding="utf-8"))
 
 def show(cls, n=8):
     idx = np.where(y == class_names.index(cls))[0][:n]

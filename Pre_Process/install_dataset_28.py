@@ -21,7 +21,7 @@ LINE_THICKNESS = 1
 TRAIN_RATIO, VAL_RATIO, TEST_RATIO = 0.8, 0.1, 0.1
 RANDOM_SEED = 42
 
-OUTPUT_DIR = "../quickdraw_100class"
+OUTPUT_DIR = "../history_data/quickdraw_100class"
 PER_CLASS_DIR = os.path.join(OUTPUT_DIR, "per_class")
 DONE_FILE = os.path.join(OUTPUT_DIR, "_done.json")
 os.makedirs(PER_CLASS_DIR, exist_ok=True)

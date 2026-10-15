@@ -228,10 +228,11 @@ import torch
 from train_v2 import QuickDrawCNN
 
 device = torch.device("cuda")
-ckpt = torch.load("best_model_v2.pt", map_location=device, weights_only=False)
+ckpt = torch.load("model/best_model_v2.pt", map_location=device, weights_only=False)
 model = QuickDrawCNN(len(ckpt["class_names"])).to(device)
 model.load_state_dict(ckpt["model_state"])
 model.eval()
+
 
 # img: (28,28) uint8 数组
 def predict(img):

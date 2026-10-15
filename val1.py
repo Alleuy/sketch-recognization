@@ -1,14 +1,14 @@
 # Time：2026/10/13 23:39
-import torch, numpy as np, json
-from train import QuickDrawCNN   # 复用类定义
+import torch, numpy as np
+from history_data.train import QuickDrawCNN   # 复用类定义
 
 device = torch.device("cuda")
-ckpt = torch.load("best_model_v2.pt", map_location=device, weights_only=False)
+ckpt = torch.load("model/best_model_v2.pt", map_location=device, weights_only=False)
 model = QuickDrawCNN(len(ckpt["class_names"])).to(device)
 model.load_state_dict(ckpt["model_state"])
 model.eval()
 
-data = np.load("quickdraw_100class/quickdraw_100class.npz")
+data = np.load("history_data/quickdraw_100class/quickdraw_100class.npz")
 X_test, y_test = data["X_test"], data["y_test"]
 
 # 随机抽 5 张看看

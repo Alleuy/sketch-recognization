@@ -2,6 +2,7 @@
 .idea/
 
 # 模型权重
+model/
 *.pt
 *.pth
 
@@ -9,7 +10,8 @@
 quickdraw_100class*/
 
 # 模型的历史数据，优化模型中
-history_data/
+history*/
+!history_data
 
 # Python缓存
 __pycache__/

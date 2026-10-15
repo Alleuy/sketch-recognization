@@ -22,7 +22,7 @@ TRAIN_RATIO, VAL_RATIO, TEST_RATIO = 0.8, 0.1, 0.1
 RANDOM_SEED = 42
 
 # ← 换一个输出目录，避免和之前 28x28 的缓存/数据混在一起
-OUTPUT_DIR = "../quickdraw_100class_64"
+OUTPUT_DIR = "../data/quickdraw_100class_64"
 PER_CLASS_DIR = os.path.join(OUTPUT_DIR, "per_class")
 DONE_FILE = os.path.join(OUTPUT_DIR, "_done.json")
 os.makedirs(PER_CLASS_DIR, exist_ok=True)
