@@ -426,13 +426,6 @@
             <button class="mode-btn" data-mode="chain" disabled title="MVP 暂未开放，敬请期待">词语接龙</button>
             <button class="mode-btn" data-mode="practice">练习模式</button>
         </div>
-        <div class="draw-wrap">
-            <canvas id="sketchCanvas" width="380" height="380"></canvas>
-            <div class="draw-btn-row">
-                <button id="clearCanvasBtn">清空画布</button>
-                <button id="submitBtn">提交草图</button>
-            </div>
-        </div>
         <div class="info-panel">
             <div class="panel">
                 <h3 id="modeTitle">闯关模式</h3>
@@ -452,6 +445,15 @@
                 <h4>📖 关卡列表（绿色=已通关）</h4>
                 <div id="levelBox"></div>
             </div>
+        </div>
+        <div class="draw-wrap">
+            <canvas id="sketchCanvas" width="380" height="380"></canvas>
+            <div class="draw-btn-row">
+                <button id="undoBtn">↩ 上一步</button>
+                <button id="clearCanvasBtn">清空画布</button>
+                <button id="submitBtn">提交草图</button>
+            </div>
+            <div style="text-align:center; margin-top:8px; color:#7aa89a; font-size:12px;">💡 支持 Ctrl+Z 撤销上一步</div>
         </div>
     </div>
 </div>
@@ -663,6 +665,33 @@ function endStroke(){
 sketchCanvas.addEventListener("pointerup", endStroke);
 sketchCanvas.addEventListener("pointercancel", endStroke);
 sketchCanvas.addEventListener("pointerleave", endStroke);
+
+// ============ 撤销（上一步 / Ctrl+Z） ============
+function undoStroke(){
+    if(drawing) return;  // 正在绘制时不撤销
+    if(strokes.length === 0){
+        const msgEl = document.getElementById("msg");
+        msgEl.className = "fail";
+        msgEl.innerText = "没有可以撤销的笔画了";
+        return;
+    }
+    strokes.pop();
+    redrawCanvas();
+    const msgEl = document.getElementById("msg");
+    msgEl.className = "";
+    msgEl.innerText = "已撤销上一步";
+    document.getElementById("top3Box").innerHTML = "";
+}
+document.getElementById("undoBtn").onclick = undoStroke;
+document.addEventListener("keydown", e=>{
+    if(e.ctrlKey || e.metaKey){
+        const key = e.key.toLowerCase();
+        if(key === "z" && !e.shiftKey && !e.altKey){
+            e.preventDefault();  // 页面无输入框，直接拦截浏览器默认行为
+            undoStroke();
+        }
+    }
+});
 
 function redrawCanvas(){
     sketchCtx.clearRect(0,0,sketchCanvas.width,sketchCanvas.height);
