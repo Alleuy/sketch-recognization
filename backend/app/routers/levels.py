@@ -28,7 +28,7 @@ def list_levels(db: Session = Depends(get_db)):
 
 @router.get("/levels/{level_id}", response_model=LevelItem)
 def get_level(level_id: int, db: Session = Depends(get_db)):
-    level = db.query(Level).get(level_id)
+    level = db.get(Level, level_id)
     if level is None:
         raise HTTPException(status_code=404, detail="关卡不存在")
     return LevelItem(
@@ -46,7 +46,7 @@ def submit_level(
     db: Session = Depends(get_db),
 ):
     """提交当前关卡笔画，判定是否通过并更新进度。"""
-    level = db.query(Level).get(level_id)
+    level = db.get(Level, level_id)
     if level is None:
         raise HTTPException(status_code=404, detail="关卡不存在")
     if not inference.is_loaded():
