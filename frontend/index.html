@@ -360,6 +360,18 @@
             color: #fff;
             box-shadow: 0 4px 10px rgba(86, 192, 160, 0.25);
         }
+        .mode-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+        .mode-btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        #levelBox {
+            max-height: 240px;
+            overflow-y: auto;
+        }
         .success {
             color: #2f9e6f;
             font-weight: bold;
@@ -394,7 +406,7 @@
     <div class="main-wrap">
         <div class="mode-panel">
             <button class="mode-btn active" data-mode="challenge">闯关模式</button>
-            <button class="mode-btn" data-mode="chain">词语接龙</button>
+            <button class="mode-btn" data-mode="chain" disabled title="MVP 暂未开放，敬请期待">词语接龙</button>
             <button class="mode-btn" data-mode="practice">练习模式</button>
         </div>
         <div class="draw-wrap">
@@ -512,25 +524,79 @@ document.getElementById("backBtn").onclick = function(){
 };
 
 // ============ 游戏逻辑 ============
-const levelData = [
+// 离线兜底关卡（后端不可用时仅可浏览）
+const FALLBACK_LEVELS = [
     {id:1, class_name:"star", display_name:"星星", difficulty:1, pass_threshold:0.5},
     {id:2, class_name:"hand", display_name:"手", difficulty:1, pass_threshold:0.5},
     {id:3, class_name:"apple", display_name:"苹果", difficulty:2, pass_threshold:0.5},
-    {id:4, class_name:"sun", display_name:"太阳", difficulty:2, pass_threshold:0.5},
-    {id:5, class_name:"house", display_name:"房子", difficulty:3, pass_threshold:0.5},
-    {id:6, class_name:"tree", display_name:"树", difficulty:3, pass_threshold:0.5},
-    {id:7, class_name:"flower", display_name:"花", difficulty:3, pass_threshold:0.5},
-    {id:8, class_name:"bird", display_name:"鸟", difficulty:4, pass_threshold:0.5},
-    {id:9, class_name:"dog", display_name:"狗", difficulty:4, pass_threshold:0.5},
-    {id:10, class_name:"cat", display_name:"猫", difficulty:5, pass_threshold:0.5},
 ];
-const chainDict = {
-    a:["apple"],b:["bird"],c:["cat"],d:["dog"],f:["flower"],h:["hand","house"],s:["star","sun"],t:["tree"]
-};
+let levelData = [];
 let progress = {};
 let currentLevelId = 1;
 let currentMode = "challenge";
-let chainState = {requiredLetter:"", startWord:""};
+
+// ============ API 对接 ============
+const API_BASE = "http://127.0.0.1:8000/api";
+
+function getUserId(){
+    let id = localStorage.getItem("qd_user_id");
+    if(!id){
+        id = "u-" + (crypto.randomUUID ? crypto.randomUUID()
+                                       : Date.now() + "-" + Math.random().toString(36).slice(2));
+        localStorage.setItem("qd_user_id", id);
+    }
+    return id;
+}
+
+async function apiFetch(path, options = {}){
+    const headers = Object.assign(
+        {"Content-Type": "application/json", "X-User-ID": getUserId()},
+        options.headers || {}
+    );
+    const resp = await fetch(API_BASE + path, Object.assign({}, options, {headers}));
+    if(!resp.ok){
+        let detail = "";
+        try { detail = (await resp.json()).detail || ""; } catch(e){}
+        throw new Error(`请求失败(${resp.status}) ${detail}`);
+    }
+    return resp.json();
+}
+
+// 画布坐标(0~380) -> 训练坐标空间(0~255)
+function normalizeStrokes(rawStrokes){
+    const k = 255 / sketchCanvas.width;
+    return rawStrokes.map(s => s.map(p => [Math.round(p[0] * k), Math.round(p[1] * k)]));
+}
+
+function renderTop3(top){
+    return top.map(x =>
+        `<div style="margin-top:6px; overflow:hidden;">
+            ${x.display_name}（${x.class_name}）
+            <span style="float:right; color:#3a9e7f;">${(x.confidence * 100).toFixed(1)}%</span>
+        </div>`).join("");
+}
+
+async function loadLevels(){
+    try{
+        const data = await apiFetch("/levels");
+        levelData = data.levels;
+    }catch(e){
+        levelData = FALLBACK_LEVELS;
+        const msgEl = document.getElementById("msg");
+        msgEl.className = "fail";
+        msgEl.innerText = "无法连接识别服务（请启动后端：uvicorn app.main:app --port 8000），当前仅离线浏览";
+    }
+    loadLevel(Math.min(currentLevelId, levelData.length));
+}
+
+async function loadProgress(){
+    try{
+        const p = await apiFetch("/progress");
+        progress = {};
+        p.levels.forEach(x => { progress[x.level_id] = x; });
+        renderLevelList();
+    }catch(e){ /* 离线时忽略 */ }
+}
 
 // ============ 绘图画布 ============
 const sketchCanvas = document.getElementById("sketchCanvas");
@@ -608,39 +674,6 @@ function clearCanvas(){
 }
 document.getElementById("clearCanvasBtn").onclick = clearCanvas;
 
-// ============ 模拟预测 ============
-function mockPredict(strokes, targetClassName){
-    const count = strokes.length;
-    const map = {};
-    levelData.forEach(l=> map[l.class_name] = l.display_name);
-    const list = levelData.map(x=>x.class_name);
-    let top5 = [];
-    if(count >= 3){
-        const conf = (Math.random()*0.35 + 0.55).toFixed(2);
-        top5.push({class_name:targetClassName, display_name:map[targetClassName], conf:Number(conf)});
-        const rest = list.filter(c=>c !== targetClassName);
-        shuffle(rest).slice(0,4).forEach(c=>{
-            const rConf = (Math.random()*0.45).toFixed(2);
-            top5.push({class_name:c, display_name:map[c], conf:Number(rConf)});
-        });
-    }else{
-        shuffle(list).slice(0,5).forEach(c=>{
-            const rConf = (Math.random()*0.42).toFixed(2);
-            top5.push({class_name:c, display_name:map[c], conf:Number(rConf)});
-        });
-    }
-    top5.sort((a,b)=>b.conf-a.conf);
-    return top5;
-}
-function shuffle(arr){
-    const copy = [...arr];
-    for(let i=copy.length-1;i>0;i--){
-        const j = Math.floor(Math.random()*(i+1));
-        [copy[i],copy[j]] = [copy[j],copy[i]];
-    }
-    return copy;
-}
-
 // ============ 关卡 ============
 function loadLevel(lid){
     const lv = levelData.find(x=>x.id === lid);
@@ -669,19 +702,6 @@ function renderLevelList(){
     document.getElementById("passCount").innerText = passedNum;
     document.getElementById("totalLevel").innerText = levelData.length;
 }
-function initChain(){
-    const keys = Object.keys(chainDict);
-    const letter = keys[Math.floor(Math.random()*keys.length)];
-    const wordList = chainDict[letter];
-    const word = wordList[Math.floor(Math.random()*wordList.length)];
-    chainState = {requiredLetter:letter, startWord:word};
-    document.getElementById("modeHint").innerText =
-        `词语接龙：上一词 ${word}，请画【${letter.toUpperCase()}】开头的物品`;
-    clearCanvas();
-    document.getElementById("msg").className = "";
-    document.getElementById("msg").innerText = "绘制草图后提交接龙";
-    document.getElementById("top3Box").innerHTML = "";
-}
 
 // ============ 模式切换 ============
 document.querySelectorAll(".mode-btn").forEach(btn=>{
@@ -697,16 +717,14 @@ document.querySelectorAll(".mode-btn").forEach(btn=>{
             progPanel.style.display = "block";
             lvPanel.style.display = "block";
             document.getElementById("modeTitle").innerText = "闯关模式";
-            document.getElementById("modeHint").innerHTML =
-                `当前关卡：<span id="lid">${currentLevelId}</span>｜请画：` +
-                `<span id="targetZh">${levelData[currentLevelId-1].display_name}</span>` +
-                `（<span id="targetEn">${levelData[currentLevelId-1].class_name}</span>）`;
+            const lv = levelData.find(l=>l.id === currentLevelId) || levelData[0];
+            if(lv){
+                document.getElementById("modeHint").innerHTML =
+                    `当前关卡：<span id="lid">${lv.id}</span>｜请画：` +
+                    `<span id="targetZh">${lv.display_name}</span>` +
+                    `（<span id="targetEn">${lv.class_name}）`;
+            }
             loadLevel(currentLevelId);
-        }else if(currentMode === "chain"){
-            progPanel.style.display = "none";
-            lvPanel.style.display = "none";
-            document.getElementById("modeTitle").innerText = "词语接龙";
-            initChain();
         }else if(currentMode === "practice"){
             progPanel.style.display = "none";
             lvPanel.style.display = "none";
@@ -720,55 +738,61 @@ document.querySelectorAll(".mode-btn").forEach(btn=>{
 });
 
 // ============ 提交 ============
-document.getElementById("submitBtn").onclick = function(){
-    if(currentMode === "challenge"){
-        const lv = levelData.find(l=>l.id === currentLevelId);
-        const top5 = mockPredict(strokes, lv.class_name);
-        const top3 = top5.slice(0,3);
-        const top1 = top5[0];
-        const ok = top1.class_name === lv.class_name && top1.conf >= lv.pass_threshold;
-        if(!progress[lv.id]) progress[lv.id] = {attempts:0, passed:false};
-        progress[lv.id].attempts += 1;
-        if(ok) progress[lv.id].passed = true;
-        const names = top3.map(x=>x.display_name);
-        if(ok){
-            document.getElementById("msg").className = "success";
-            document.getElementById("msg").innerText = `识别${lv.display_name}成功，准备开启下一轮...`;
-            document.getElementById("top3Box").innerHTML = "";
-            setTimeout(()=>{
-                if(currentLevelId < levelData.length) loadLevel(currentLevelId+1);
-            },1600);
-        }else{
-            document.getElementById("msg").className = "fail";
-            document.getElementById("msg").innerText = `识别${lv.display_name}失败，你画的可能是：${names.join("、")}`;
-            document.getElementById("top3Box").innerHTML = "";
+document.getElementById("submitBtn").onclick = async function(){
+    if(strokes.length === 0 || currentStroke.length > 0){
+        document.getElementById("msg").className = "fail";
+        document.getElementById("msg").innerText = "请先在画布上绘制草图";
+        return;
+    }
+    const payload = { strokes: normalizeStrokes(strokes) };
+    const msgEl = document.getElementById("msg");
+    const top3Box = document.getElementById("top3Box");
+    msgEl.className = "";
+    msgEl.innerText = "识别中...";
+    top3Box.innerHTML = "";
+
+    try{
+        if(currentMode === "challenge"){
+            const lv = levelData.find(l=>l.id === currentLevelId);
+            if(!lv) return;
+            const r = await apiFetch(`/levels/${lv.id}/submit`, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            });
+            progress[lv.id] = progress[lv.id] || {attempts:0, passed:false, best_confidence:0};
+            progress[lv.id].attempts = r.attempts;
+            progress[lv.id].best_confidence = r.best_confidence;
+            if(r.passed){
+                progress[lv.id].passed = true;
+                msgEl.className = "success";
+                msgEl.innerText = `识别「${r.display_name}」成功！`;
+                top3Box.innerHTML = renderTop3(r.top3);
+                renderLevelList();
+                setTimeout(()=>{
+                    if(r.next_level_id) loadLevel(r.next_level_id);
+                }, 1600);
+            }else{
+                const names = r.top3.map(x=>x.display_name).join("、");
+                msgEl.className = "fail";
+                msgEl.innerText = `识别「${r.display_name}」失败，你画的可能是：${names}`;
+                top3Box.innerHTML = renderTop3(r.top3);
+                renderLevelList();
+            }
+        }else if(currentMode === "practice"){
+            const r = await apiFetch("/predict", {
+                method: "POST",
+                body: JSON.stringify(payload)
+            });
+            msgEl.innerText = "预测结果（top3）：";
+            top3Box.innerHTML = renderTop3(r.top5.slice(0, 3));
         }
-        renderLevelList();
-    }else if(currentMode === "chain"){
-        const top5 = mockPredict(strokes, "star");
-        const req = chainState.requiredLetter.toLowerCase();
-        const match = top5.find(x=>x.class_name.startsWith(req) && x.conf >= 0.15);
-        const top3Names = top5.slice(0,3).map(x=>x.display_name);
-        if(match){
-            document.getElementById("msg").className = "success";
-            document.getElementById("msg").innerText = `识别${match.display_name}成功，准备开启下一轮...`;
-            document.getElementById("top3Box").innerHTML = "";
-            setTimeout(()=>initChain(),1600);
-        }else{
-            document.getElementById("msg").className = "fail";
-            document.getElementById("msg").innerText = `识别失败，你画的可能是：${top3Names.join("、")}`;
-            document.getElementById("top3Box").innerHTML = "";
-        }
-    }else if(currentMode === "practice"){
-        const top5 = mockPredict(strokes, "star");
-        const top3Names = top5.slice(0,3).map(x=>x.display_name);
-        document.getElementById("msg").className = "";
-        document.getElementById("msg").innerText = `预测结果：${top3Names.join("、")}`;
-        document.getElementById("top3Box").innerHTML = "";
+    }catch(e){
+        msgEl.className = "fail";
+        msgEl.innerText = "无法连接识别服务，请确认后端已启动（uvicorn app.main:app --port 8000）";
     }
 };
 
-loadLevel(1);
+loadLevels().then(loadProgress);
 </script>
 </body>
 </html>
