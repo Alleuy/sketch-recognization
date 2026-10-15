@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CNN手绘草图识别系统</title>
+    <title>一起画画吧！</title>
     <style>
         * {
             box-sizing: border-box;
@@ -360,6 +360,23 @@
             color: #fff;
             box-shadow: 0 4px 10px rgba(86, 192, 160, 0.25);
         }
+        .level-tag.current {
+            background: #fff3d6;
+            border-color: #f0c060;
+            color: #a97b1a;
+            font-weight: bold;
+            box-shadow: 0 0 0 3px rgba(240, 192, 96, 0.25);
+        }
+        .level-tag.locked {
+            cursor: not-allowed;
+            opacity: 0.45;
+            color: #9aa8a3;
+            background: rgba(235, 240, 238, 0.8);
+        }
+        .level-tag.locked:hover {
+            background: rgba(235, 240, 238, 0.8);
+            transform: none;
+        }
         .mode-btn:disabled {
             opacity: 0.45;
             cursor: not-allowed;
@@ -393,7 +410,7 @@
         <span class="deco-dot d2"></span>
         <span class="deco-dot d3"></span>
 
-        <h1>CNN手绘草图识别系统</h1>
+        <h1>一起画画吧！</h1>
         <p class="subtitle">随手画几笔，让 AI 猜猜看</p>
         <button id="startBtn">开始游戏</button>
     </div>
@@ -402,7 +419,7 @@
 <!-- 游戏页面 -->
 <div class="game-wrap" id="gamePage">
     <button class="back-btn" id="backBtn">← 返回首页</button>
-    <h1>CNN手绘草图识别系统</h1>
+    <h1>一起画画吧！</h1>
     <div class="main-wrap">
         <div class="mode-panel">
             <button class="mode-btn active" data-mode="challenge">闯关模式</button>
@@ -693,9 +710,24 @@ function loadLevel(lid){
 }
 function renderLevelList(){
     let html = "";
+    // 通关链最前沿：第一个未通关的关卡（唯一可进入的未通关关），其后未通关的关卡锁定
+    let frontierId = null;
+    for(const l of levelData){
+        if(!progress[l.id] || !progress[l.id].passed){ frontierId = l.id; break; }
+    }
     levelData.forEach(l=>{
         const passed = progress[l.id] && progress[l.id].passed;
-        html += `<span class="level-tag ${passed?'passed':''}" onclick="loadLevel(${l.id})">${l.id}.${l.display_name}</span>`;
+        const isCurrent = l.id === currentLevelId;
+        const locked = !passed && l.id !== frontierId;
+        let cls = "level-tag";
+        if(passed) cls += " passed";
+        else if(isCurrent) cls += " current";
+        if(locked) cls += " locked";
+        const label = `${l.id}.${l.display_name}`;
+        const icon = locked ? "🔒" : (passed ? "✅" : "▶");
+        html += locked
+            ? `<span class="${cls}" title="先通过前面的关卡才能解锁">${icon} ${label}</span>`
+            : `<span class="${cls}" onclick="loadLevel(${l.id})" title="点击进入该关卡">${icon} ${label}</span>`;
     });
     document.getElementById("levelBox").innerHTML = html;
     const passedNum = Object.values(progress).filter(p=>p.passed).length;
