@@ -1,0 +1,11 @@
+fastapi>=0.109
+uvicorn[standard]>=0.27
+sqlalchemy>=2.0
+pydantic>=2.5
+numpy>=1.26
+opencv-python>=4.9
+httpx
+pytest
+# torch 使用 CPU 版本即可（模型仅 1.2M 参数）：
+# pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch>=2.1
