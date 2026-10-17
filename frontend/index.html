@@ -430,7 +430,7 @@
             <div class="panel">
                 <h3 id="modeTitle">闯关模式</h3>
                 <div id="modeHint">当前关卡：<span id="lid">1</span>｜请画：<span id="targetZh">星星</span>（<span id="targetEn">star</span>）</div>
-                <div style="margin-top:8px; color:#7aa89a; font-size:13px;">模式：平衡模式（top1匹配，置信度≥0.5 通过）</div>
+                <div style="margin-top:8px; color:#7aa89a; font-size:13px;">模式：平衡模式（top1匹配，准确度≥0.5 通过）</div>
             </div>
             <div class="panel">
                 <h4>📌 识别反馈</h4>
@@ -454,6 +454,11 @@
                 <button id="submitBtn">提交草图</button>
             </div>
             <div style="text-align:center; margin-top:8px; color:#7aa89a; font-size:12px;">💡 支持 Ctrl+Z 撤销上一步</div>
+            <div id="hintBox" style="display:none; margin-top:14px; text-align:center;">
+                <div style="font-size:13px; color:#a97b1a; font-weight:bold;">连续 5 次未通关，参考一下「<span id="hintName"></span>」可以这样画：</div>
+                <img id="hintImg" alt="参考图" style="width:170px; height:170px; margin-top:8px; border-radius:14px; background:#0b1222; box-shadow:0 6px 16px rgba(0,0,0,0.18);">
+                <div id="hintFallback" style="display:none; font-size:12px; color:#c0605a; margin-top:4px;">参考图加载失败</div>
+            </div>
         </div>
     </div>
 </div>
@@ -732,6 +737,7 @@ function loadLevel(lid){
     if(elZh) elZh.innerText = lv.display_name;
     if(elEn) elEn.innerText = lv.class_name;
     clearCanvas();
+    hideHint();
     document.getElementById("msg").className = "";
     document.getElementById("msg").innerText = "绘制草图后点击提交";
     document.getElementById("top3Box").innerHTML = "";
@@ -792,11 +798,35 @@ document.querySelectorAll(".mode-btn").forEach(btn=>{
             document.getElementById("modeTitle").innerText = "练习模式";
             document.getElementById("modeHint").innerText = "自由绘图，只看预测结果，不计闯关";
             clearCanvas();
+            hideHint();
             document.getElementById("msg").innerText = "绘制草图后点击提交";
             document.getElementById("top3Box").innerHTML = "";
         }
     };
 });
+
+// ============ 通关提示图（同一关卡连续 5 次未通关后展示） ============
+let failStreak = 0;
+const HINT_BASE = API_BASE.replace(/\/api$/, "") + "/static/hints/";
+function hideHint(){
+    failStreak = 0;
+    const box = document.getElementById("hintBox");
+    if(box) box.style.display = "none";
+}
+function maybeShowHint(displayName, className){
+    if(failStreak < 5) return;
+    const box = document.getElementById("hintBox");
+    const img = document.getElementById("hintImg");
+    document.getElementById("hintName").innerText = displayName;
+    document.getElementById("hintFallback").style.display = "none";
+    img.onerror = function(){
+        img.style.display = "none";
+        document.getElementById("hintFallback").style.display = "block";
+    };
+    img.style.display = "";
+    img.src = HINT_BASE + className + ".png";
+    box.style.display = "block";
+}
 
 // ============ 提交 ============
 document.getElementById("submitBtn").onclick = async function(){
@@ -825,6 +855,7 @@ document.getElementById("submitBtn").onclick = async function(){
             progress[lv.id].best_confidence = r.best_confidence;
             if(r.passed){
                 progress[lv.id].passed = true;
+                hideHint();
                 msgEl.className = "success";
                 msgEl.innerText = `识别「${r.display_name}」成功！`;
                 top3Box.innerHTML = renderTop3(r.top3);
@@ -838,6 +869,8 @@ document.getElementById("submitBtn").onclick = async function(){
                 msgEl.innerText = `识别「${r.display_name}」失败，你画的可能是：${names}`;
                 top3Box.innerHTML = renderTop3(r.top3);
                 renderLevelList();
+                failStreak++;
+                maybeShowHint(lv.display_name, lv.class_name);
             }
         }else if(currentMode === "practice"){
             const r = await apiFetch("/predict", {

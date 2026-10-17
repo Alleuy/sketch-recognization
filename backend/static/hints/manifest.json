@@ -1,0 +1,502 @@
+{
+  "canoe": {
+    "file": "canoe.png",
+    "confidence": 0.9807,
+    "sample_idx": 2171
+  },
+  "knife": {
+    "file": "knife.png",
+    "confidence": 0.9962,
+    "sample_idx": 11489
+  },
+  "shark": {
+    "file": "shark.png",
+    "confidence": 0.9997,
+    "sample_idx": 6592
+  },
+  "sink": {
+    "file": "sink.png",
+    "confidence": 0.9998,
+    "sample_idx": 21965
+  },
+  "vase": {
+    "file": "vase.png",
+    "confidence": 0.9976,
+    "sample_idx": 13868
+  },
+  "calculator": {
+    "file": "calculator.png",
+    "confidence": 0.9997,
+    "sample_idx": 41623
+  },
+  "fireplace": {
+    "file": "fireplace.png",
+    "confidence": 0.9998,
+    "sample_idx": 31070
+  },
+  "tent": {
+    "file": "tent.png",
+    "confidence": 0.9991,
+    "sample_idx": 6452
+  },
+  "tornado": {
+    "file": "tornado.png",
+    "confidence": 0.9981,
+    "sample_idx": 4122
+  },
+  "steak": {
+    "file": "steak.png",
+    "confidence": 0.9791,
+    "sample_idx": 35105
+  },
+  "pear": {
+    "file": "pear.png",
+    "confidence": 0.9981,
+    "sample_idx": 36841
+  },
+  "submarine": {
+    "file": "submarine.png",
+    "confidence": 0.9983,
+    "sample_idx": 35332
+  },
+  "squiggle": {
+    "file": "squiggle.png",
+    "confidence": 0.9856,
+    "sample_idx": 47688
+  },
+  "school bus": {
+    "file": "school bus.png",
+    "confidence": 0.9996,
+    "sample_idx": 7080
+  },
+  "syringe": {
+    "file": "syringe.png",
+    "confidence": 0.9998,
+    "sample_idx": 11913
+  },
+  "pizza": {
+    "file": "pizza.png",
+    "confidence": 0.9996,
+    "sample_idx": 1483
+  },
+  "flying saucer": {
+    "file": "flying saucer.png",
+    "confidence": 0.999,
+    "sample_idx": 13478
+  },
+  "airplane": {
+    "file": "airplane.png",
+    "confidence": 0.9989,
+    "sample_idx": 31432
+  },
+  "toilet": {
+    "file": "toilet.png",
+    "confidence": 0.9997,
+    "sample_idx": 33437
+  },
+  "bread": {
+    "file": "bread.png",
+    "confidence": 0.9991,
+    "sample_idx": 653
+  },
+  "camouflage": {
+    "file": "camouflage.png",
+    "confidence": 0.9981,
+    "sample_idx": 4816
+  },
+  "horse": {
+    "file": "horse.png",
+    "confidence": 0.9983,
+    "sample_idx": 26374
+  },
+  "cactus": {
+    "file": "cactus.png",
+    "confidence": 1.0,
+    "sample_idx": 43938
+  },
+  "popsicle": {
+    "file": "popsicle.png",
+    "confidence": 0.9957,
+    "sample_idx": 23919
+  },
+  "animal migration": {
+    "file": "animal migration.png",
+    "confidence": 0.9999,
+    "sample_idx": 47223
+  },
+  "wine glass": {
+    "file": "wine glass.png",
+    "confidence": 0.9993,
+    "sample_idx": 38333
+  },
+  "key": {
+    "file": "key.png",
+    "confidence": 0.9998,
+    "sample_idx": 37553
+  },
+  "eyeglasses": {
+    "file": "eyeglasses.png",
+    "confidence": 0.9947,
+    "sample_idx": 28428
+  },
+  "oven": {
+    "file": "oven.png",
+    "confidence": 0.9995,
+    "sample_idx": 7377
+  },
+  "garden hose": {
+    "file": "garden hose.png",
+    "confidence": 0.9196,
+    "sample_idx": 20902
+  },
+  "mailbox": {
+    "file": "mailbox.png",
+    "confidence": 0.9976,
+    "sample_idx": 23941
+  },
+  "megaphone": {
+    "file": "megaphone.png",
+    "confidence": 0.9997,
+    "sample_idx": 2978
+  },
+  "moustache": {
+    "file": "moustache.png",
+    "confidence": 0.9995,
+    "sample_idx": 40764
+  },
+  "wristwatch": {
+    "file": "wristwatch.png",
+    "confidence": 0.9999,
+    "sample_idx": 22107
+  },
+  "bracelet": {
+    "file": "bracelet.png",
+    "confidence": 0.9999,
+    "sample_idx": 3815
+  },
+  "lion": {
+    "file": "lion.png",
+    "confidence": 0.9999,
+    "sample_idx": 5039
+  },
+  "bucket": {
+    "file": "bucket.png",
+    "confidence": 0.9982,
+    "sample_idx": 34307
+  },
+  "stereo": {
+    "file": "stereo.png",
+    "confidence": 0.9979,
+    "sample_idx": 28381
+  },
+  "speedboat": {
+    "file": "speedboat.png",
+    "confidence": 0.9976,
+    "sample_idx": 4916
+  },
+  "hot air balloon": {
+    "file": "hot air balloon.png",
+    "confidence": 0.9988,
+    "sample_idx": 44035
+  },
+  "triangle": {
+    "file": "triangle.png",
+    "confidence": 0.9791,
+    "sample_idx": 18721
+  },
+  "purse": {
+    "file": "purse.png",
+    "confidence": 0.9969,
+    "sample_idx": 34686
+  },
+  "clarinet": {
+    "file": "clarinet.png",
+    "confidence": 0.9999,
+    "sample_idx": 5698
+  },
+  "sun": {
+    "file": "sun.png",
+    "confidence": 0.9999,
+    "sample_idx": 42559
+  },
+  "jail": {
+    "file": "jail.png",
+    "confidence": 0.9992,
+    "sample_idx": 33564
+  },
+  "backpack": {
+    "file": "backpack.png",
+    "confidence": 0.9996,
+    "sample_idx": 40044
+  },
+  "mosquito": {
+    "file": "mosquito.png",
+    "confidence": 0.9961,
+    "sample_idx": 23383
+  },
+  "monkey": {
+    "file": "monkey.png",
+    "confidence": 0.999,
+    "sample_idx": 10850
+  },
+  "raccoon": {
+    "file": "raccoon.png",
+    "confidence": 0.9973,
+    "sample_idx": 44825
+  },
+  "peas": {
+    "file": "peas.png",
+    "confidence": 0.9978,
+    "sample_idx": 32
+  },
+  "bulldozer": {
+    "file": "bulldozer.png",
+    "confidence": 0.9991,
+    "sample_idx": 18895
+  },
+  "owl": {
+    "file": "owl.png",
+    "confidence": 0.9998,
+    "sample_idx": 11044
+  },
+  "star": {
+    "file": "star.png",
+    "confidence": 0.9981,
+    "sample_idx": 21595
+  },
+  "sea turtle": {
+    "file": "sea turtle.png",
+    "confidence": 0.9997,
+    "sample_idx": 1582
+  },
+  "cannon": {
+    "file": "cannon.png",
+    "confidence": 0.9996,
+    "sample_idx": 2497
+  },
+  "pencil": {
+    "file": "pencil.png",
+    "confidence": 0.9967,
+    "sample_idx": 24084
+  },
+  "shoe": {
+    "file": "shoe.png",
+    "confidence": 0.9888,
+    "sample_idx": 44303
+  },
+  "tractor": {
+    "file": "tractor.png",
+    "confidence": 0.9963,
+    "sample_idx": 15479
+  },
+  "toothbrush": {
+    "file": "toothbrush.png",
+    "confidence": 0.9963,
+    "sample_idx": 7020
+  },
+  "snail": {
+    "file": "snail.png",
+    "confidence": 0.9989,
+    "sample_idx": 27049
+  },
+  "grapes": {
+    "file": "grapes.png",
+    "confidence": 0.9985,
+    "sample_idx": 31345
+  },
+  "watermelon": {
+    "file": "watermelon.png",
+    "confidence": 0.9986,
+    "sample_idx": 22518
+  },
+  "roller coaster": {
+    "file": "roller coaster.png",
+    "confidence": 0.9999,
+    "sample_idx": 38034
+  },
+  "tiger": {
+    "file": "tiger.png",
+    "confidence": 0.9987,
+    "sample_idx": 7937
+  },
+  "skyscraper": {
+    "file": "skyscraper.png",
+    "confidence": 0.9936,
+    "sample_idx": 22835
+  },
+  "sword": {
+    "file": "sword.png",
+    "confidence": 0.9993,
+    "sample_idx": 202
+  },
+  "windmill": {
+    "file": "windmill.png",
+    "confidence": 0.9999,
+    "sample_idx": 21262
+  },
+  "cello": {
+    "file": "cello.png",
+    "confidence": 0.9994,
+    "sample_idx": 34187
+  },
+  "bed": {
+    "file": "bed.png",
+    "confidence": 0.998,
+    "sample_idx": 2976
+  },
+  "smiley face": {
+    "file": "smiley face.png",
+    "confidence": 0.9986,
+    "sample_idx": 31044
+  },
+  "wine bottle": {
+    "file": "wine bottle.png",
+    "confidence": 0.9966,
+    "sample_idx": 15443
+  },
+  "piano": {
+    "file": "piano.png",
+    "confidence": 0.9997,
+    "sample_idx": 3822
+  },
+  "rake": {
+    "file": "rake.png",
+    "confidence": 0.9972,
+    "sample_idx": 22481
+  },
+  "teapot": {
+    "file": "teapot.png",
+    "confidence": 0.9996,
+    "sample_idx": 7269
+  },
+  "rollerskates": {
+    "file": "rollerskates.png",
+    "confidence": 0.9996,
+    "sample_idx": 6019
+  },
+  "flamingo": {
+    "file": "flamingo.png",
+    "confidence": 0.9998,
+    "sample_idx": 25613
+  },
+  "carrot": {
+    "file": "carrot.png",
+    "confidence": 0.9998,
+    "sample_idx": 19619
+  },
+  "power outlet": {
+    "file": "power outlet.png",
+    "confidence": 0.9996,
+    "sample_idx": 9600
+  },
+  "snowman": {
+    "file": "snowman.png",
+    "confidence": 0.998,
+    "sample_idx": 29640
+  },
+  "tooth": {
+    "file": "tooth.png",
+    "confidence": 0.9992,
+    "sample_idx": 16452
+  },
+  "paintbrush": {
+    "file": "paintbrush.png",
+    "confidence": 0.9987,
+    "sample_idx": 16581
+  },
+  "jacket": {
+    "file": "jacket.png",
+    "confidence": 0.9994,
+    "sample_idx": 21042
+  },
+  "see saw": {
+    "file": "see saw.png",
+    "confidence": 0.9993,
+    "sample_idx": 12310
+  },
+  "stairs": {
+    "file": "stairs.png",
+    "confidence": 0.9956,
+    "sample_idx": 11580
+  },
+  "skull": {
+    "file": "skull.png",
+    "confidence": 0.9994,
+    "sample_idx": 12945
+  },
+  "picture frame": {
+    "file": "picture frame.png",
+    "confidence": 0.9972,
+    "sample_idx": 38241
+  },
+  "elephant": {
+    "file": "elephant.png",
+    "confidence": 0.9997,
+    "sample_idx": 35374
+  },
+  "hot dog": {
+    "file": "hot dog.png",
+    "confidence": 0.9973,
+    "sample_idx": 25502
+  },
+  "hand": {
+    "file": "hand.png",
+    "confidence": 0.9995,
+    "sample_idx": 18186
+  },
+  "angel": {
+    "file": "angel.png",
+    "confidence": 1.0,
+    "sample_idx": 19079
+  },
+  "apple": {
+    "file": "apple.png",
+    "confidence": 0.9988,
+    "sample_idx": 3191
+  },
+  "bowtie": {
+    "file": "bowtie.png",
+    "confidence": 0.9997,
+    "sample_idx": 4815
+  },
+  "leaf": {
+    "file": "leaf.png",
+    "confidence": 0.9991,
+    "sample_idx": 1344
+  },
+  "underwear": {
+    "file": "underwear.png",
+    "confidence": 0.9986,
+    "sample_idx": 45748
+  },
+  "hourglass": {
+    "file": "hourglass.png",
+    "confidence": 0.9983,
+    "sample_idx": 46908
+  },
+  "shovel": {
+    "file": "shovel.png",
+    "confidence": 0.9984,
+    "sample_idx": 2422
+  },
+  "snake": {
+    "file": "snake.png",
+    "confidence": 0.9782,
+    "sample_idx": 48727
+  },
+  "shorts": {
+    "file": "shorts.png",
+    "confidence": 0.9933,
+    "sample_idx": 36733
+  },
+  "grass": {
+    "file": "grass.png",
+    "confidence": 0.9963,
+    "sample_idx": 13746
+  },
+  "radio": {
+    "file": "radio.png",
+    "confidence": 0.9888,
+    "sample_idx": 35195
+  }
+}

@@ -2,11 +2,13 @@
 import json
 import logging
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
-from app.config import MODEL_PATH, CLASS_NAMES_ZH_FILE
+from app.config import BASE_DIR, MODEL_PATH, CLASS_NAMES_ZH_FILE
 from app.ml import inference
 from app.routers import predict, levels, progress
 from app.utils.init_db import init_db
@@ -51,6 +53,9 @@ app.add_middleware(
 app.include_router(predict.router, prefix="/api")
 app.include_router(levels.router, prefix="/api")
 app.include_router(progress.router, prefix="/api")
+
+# 关卡参考提示图（generate_hint_images.py 产出）
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 
 
 @app.get("/api/health")
