@@ -11,7 +11,7 @@
         body {
             height: 100vh;
             overflow: hidden;
-            /* 🌿 小清新：薄荷 + 天蓝 + 奶油 + 淡粉 的柔和渐变 */
+            /* 小清新：薄荷 + 天蓝 + 奶油 + 淡粉 的柔和渐变 */
             background-color: #f2faf6;
             background-image:
                 radial-gradient(circle at 15% 20%, rgba(168, 230, 207, 0.55), transparent 40%),
