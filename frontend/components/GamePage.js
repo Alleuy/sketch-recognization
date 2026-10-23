@@ -22,6 +22,11 @@ export default function GamePage({ game, gameRef }){
                     hint={game.hint}
                     hintImgError={game.hintImgError}
                     onHintError={game.onHintError}
+                    coach={game.coach}
+                    coachLoading={game.coachLoading}
+                    failCount={game.failCount}
+                    currentMode={game.currentMode}
+                    onAskCoach={game.askCoach}
                 />
             </div>
         </div>

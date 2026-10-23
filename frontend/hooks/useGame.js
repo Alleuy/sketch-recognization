@@ -17,6 +17,10 @@ export default function useGame({ drawing, homeRef, gameRef }){
     const [top3, setTop3] = useState([]);
     const [hint, setHint] = useState(null);
     const [hintImgError, setHintImgError] = useState(false);
+    // 绘画导师（P0+P1）：求助卡片状态与连续失败计数（state 供按钮显隐）
+    const [coach, setCoach] = useState(null);
+    const [coachLoading, setCoachLoading] = useState(false);
+    const [failCount, setFailCount] = useState(0);
     const failStreakRef = useRef(0);
     const currentLevelIdRef = useRef(1);
     const levelDataRef = useRef([]);
@@ -28,6 +32,9 @@ export default function useGame({ drawing, homeRef, gameRef }){
 
     const hideHint = useCallback(() => {
         failStreakRef.current = 0;
+        setFailCount(0);
+        setCoach(null);
+        setCoachLoading(false);
         setHint(null);
         setHintImgError(false);
     }, []);
@@ -118,6 +125,8 @@ export default function useGame({ drawing, homeRef, gameRef }){
         const payload = { strokes: normalizeStrokes(getStrokes(), 380) };
         setMsg({text: "识别中...", cls: ""});
         setTop3([]);
+        setCoach(null);
+        setCoachLoading(false);
         try{
             if(currentMode === "challenge"){
                 const lv = levelDataRef.current.find(l => l.id === currentLevelIdRef.current);
@@ -147,6 +156,7 @@ export default function useGame({ drawing, homeRef, gameRef }){
                     setMsg({text: `识别「${r.display_name}」失败，你画的可能是：${names}`, cls: "fail"});
                     setTop3(r.top3);
                     failStreakRef.current++;
+                    setFailCount(failStreakRef.current);
                     if(failStreakRef.current >= 5){
                         setHintImgError(false);
                         setHint({name: lv.display_name, className: lv.class_name});
@@ -166,6 +176,33 @@ export default function useGame({ drawing, homeRef, gameRef }){
     }, [currentMode, isBlank, getStrokes, hideHint, loadLevel]);
 
     const onHintError = useCallback(() => setHintImgError(true), []);
+
+    // ============ 绘画导师：几何诊断 + 反事实探针（后端规则策略 Agent） ============
+    const askCoach = useCallback(async () => {
+        if(currentMode !== "challenge" || coachLoading) return;
+        if(isBlank()){
+            setMsg({text: "请先在画布上绘制草图", cls: "fail"});
+            return;
+        }
+        const lv = levelDataRef.current.find(l => l.id === currentLevelIdRef.current);
+        if(!lv) return;
+        setCoachLoading(true);
+        setCoach(null);
+        try{
+            const r = await apiFetch("/coach", {
+                method: "POST",
+                body: JSON.stringify({
+                    level_id: lv.id,
+                    strokes: normalizeStrokes(getStrokes(), 380)
+                })
+            });
+            setCoach(r);
+        }catch(e){
+            setCoach({error: "导师暂时无法分析，请稍后再试"});
+        }finally{
+            setCoachLoading(false);
+        }
+    }, [currentMode, coachLoading, isBlank, getStrokes]);
 
     // ============ 启动：页面加载即拉取关卡与进度（原版如此，不等点开始游戏） ============
     useEffect(() => {
@@ -197,6 +234,7 @@ export default function useGame({ drawing, homeRef, gameRef }){
     return {
         levelData, progress, currentLevelId, currentMode, msg, top3,
         hint, hintImgError, onHintError,
+        coach, coachLoading, failCount, askCoach,
         lv, passCount, totalLevel,
         canvasRef: drawing.canvasRef, handleClear: clear,
         startGame, goHome, switchMode, selectLevel,

@@ -391,4 +391,82 @@
             color: #d97070;
             font-weight: bold;
         }
+
+        /* ===== 绘画导师卡片（P0+P1） ===== */
+        #coachBox {
+            margin-top: 14px;
+        }
+        #coachAskBtn {
+            width: 100%;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 999px;
+            border: 1.5px dashed rgba(86, 192, 160, 0.6);
+            background: rgba(255, 255, 255, 0.9);
+            color: #3a9e7f;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        #coachAskBtn:hover:not(:disabled) {
+            background: #eefaf5;
+            transform: translateY(-1px);
+        }
+        #coachAskBtn:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+        .coach-card {
+            margin-top: 10px;
+            padding: 14px 16px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(86, 192, 160, 0.35);
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(91, 165, 140, 0.10);
+        }
+        .coach-head {
+            display: flex;
+            align-items: center;
+            color: #2f7f68;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .coach-diagnosis {
+            margin-top: 8px;
+            color: #2f7f68;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        .coach-evidence {
+            margin-top: 6px;
+            padding: 0;
+            list-style: none;
+        }
+        .coach-evidence li {
+            color: #5a8578;
+            font-size: 12.5px;
+            line-height: 1.7;
+        }
+        .coach-probe {
+            margin-top: 8px;
+            padding: 6px 10px;
+            border-radius: 10px;
+            background: #fff8e6;
+            color: #a97b1a;
+            font-size: 12.5px;
+            line-height: 1.7;
+        }
+        .coach-suggest {
+            margin-top: 8px;
+            padding-left: 16px;
+        }
+        .coach-suggest li {
+            color: #4a6b62;
+            font-size: 13px;
+            line-height: 1.8;
+        }
     

@@ -47,6 +47,24 @@ def is_loaded() -> bool:
     return _model is not None
 
 
+def predict_probs(strokes):
+    """渲染笔画 -> 推理 -> 返回全量概率 (class_names, probs)。
+
+    供绘画导师做反事实探针使用（需要目标类别的真实概率，不限 top5）。
+    """
+    if _model is None:
+        raise RuntimeError("模型尚未加载，请先调用 load_model()")
+
+    img = render_drawing(strokes)
+    tensor = to_tensor(img, _device)
+
+    with model_lock:
+        with torch.no_grad():
+            probs = torch.softmax(_model(tensor), dim=1)[0].cpu().numpy()
+
+    return _class_names, probs
+
+
 def predict_topk(strokes, k=5):
     """渲染笔画 -> 推理 -> 返回 [(class_name, display_name, confidence), ...] 前 k 项。"""
     if _model is None:

@@ -1,9 +1,11 @@
 "use client";
 import HintBox from "./HintBox";
+import CoachCard from "./CoachCard";
 import { IconUndo, IconBulb } from "./Icons";
 
-// 右侧绘画区：画布 + 按钮行 + Ctrl+Z 提示 + 通关提示图
-export default function DrawPanel({ canvasRef, onUndo, onClear, onSubmit, hint, hintImgError, onHintError }){
+// 右侧绘画区：画布 + 按钮行 + Ctrl+Z 提示 + 通关提示图 + 绘画导师卡片
+export default function DrawPanel({ canvasRef, onUndo, onClear, onSubmit, hint, hintImgError, onHintError,
+                                    coach, coachLoading, failCount, currentMode, onAskCoach }){
     return (
         <div className="draw-wrap">
             <canvas id="sketchCanvas" width="380" height="380" ref={canvasRef}></canvas>
@@ -14,6 +16,13 @@ export default function DrawPanel({ canvasRef, onUndo, onClear, onSubmit, hint, 
             </div>
             <div style={{textAlign: "center", marginTop: 8, color: "#7aa89a", fontSize: 12}}><IconBulb size={12} style={{ marginRight: 4 }} />支持 Ctrl+Z 撤销上一步</div>
             <HintBox hint={hint} imgError={hintImgError} onError={onHintError} />
+            <CoachCard
+                visible={currentMode === "challenge"}
+                failCount={failCount}
+                coach={coach}
+                loading={coachLoading}
+                onAsk={onAskCoach}
+            />
         </div>
     );
 }

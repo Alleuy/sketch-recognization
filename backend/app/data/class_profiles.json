@@ -1,0 +1,1002 @@
+{
+  "canoe": {
+    "samples": 200,
+    "coverage_p10": 0.2484,
+    "coverage_p50": 0.3594,
+    "coverage_p90": 0.5469,
+    "offset_p50": 0.3282,
+    "offset_p90": 0.3837,
+    "ink_ratio_p50": 0.1629,
+    "aspect_p50": 2.7826
+  },
+  "knife": {
+    "samples": 200,
+    "coverage_p10": 0.2031,
+    "coverage_p50": 0.3594,
+    "coverage_p90": 0.8297,
+    "offset_p50": 0.3282,
+    "offset_p90": 0.4063,
+    "ink_ratio_p50": 0.1595,
+    "aspect_p50": 0.7578
+  },
+  "shark": {
+    "samples": 200,
+    "coverage_p10": 0.3734,
+    "coverage_p50": 0.5312,
+    "coverage_p90": 0.7672,
+    "offset_p50": 0.2423,
+    "offset_p90": 0.3212,
+    "ink_ratio_p50": 0.2069,
+    "aspect_p50": 1.8824
+  },
+  "sink": {
+    "samples": 200,
+    "coverage_p10": 0.6562,
+    "coverage_p50": 0.8594,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0785,
+    "offset_p90": 0.1799,
+    "ink_ratio_p50": 0.3198,
+    "aspect_p50": 1.0492
+  },
+  "vase": {
+    "samples": 200,
+    "coverage_p10": 0.5,
+    "coverage_p50": 0.6875,
+    "coverage_p90": 0.9062,
+    "offset_p50": 0.1642,
+    "offset_p90": 0.2579,
+    "ink_ratio_p50": 0.2158,
+    "aspect_p50": 0.6875
+  },
+  "calculator": {
+    "samples": 200,
+    "coverage_p10": 0.6719,
+    "coverage_p50": 0.8438,
+    "coverage_p90": 0.986,
+    "offset_p50": 0.0863,
+    "offset_p90": 0.1721,
+    "ink_ratio_p50": 0.393,
+    "aspect_p50": 0.8516
+  },
+  "fireplace": {
+    "samples": 200,
+    "coverage_p10": 0.5938,
+    "coverage_p50": 0.7969,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.1097,
+    "offset_p90": 0.2111,
+    "ink_ratio_p50": 0.3716,
+    "aspect_p50": 1.1429
+  },
+  "tent": {
+    "samples": 200,
+    "coverage_p10": 0.5469,
+    "coverage_p50": 0.7891,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.1136,
+    "offset_p90": 0.2345,
+    "ink_ratio_p50": 0.2253,
+    "aspect_p50": 1.2308
+  },
+  "tornado": {
+    "samples": 200,
+    "coverage_p10": 0.5625,
+    "coverage_p50": 0.7891,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.1136,
+    "offset_p90": 0.2267,
+    "ink_ratio_p50": 0.3833,
+    "aspect_p50": 0.8906
+  },
+  "steak": {
+    "samples": 200,
+    "coverage_p10": 0.5156,
+    "coverage_p50": 0.7812,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.1174,
+    "offset_p90": 0.2501,
+    "ink_ratio_p50": 0.272,
+    "aspect_p50": 1.2428
+  },
+  "pear": {
+    "samples": 200,
+    "coverage_p10": 0.5609,
+    "coverage_p50": 0.7031,
+    "coverage_p90": 0.9062,
+    "offset_p50": 0.1564,
+    "offset_p90": 0.2275,
+    "ink_ratio_p50": 0.1866,
+    "aspect_p50": 0.7031
+  },
+  "submarine": {
+    "samples": 200,
+    "coverage_p10": 0.3281,
+    "coverage_p50": 0.5859,
+    "coverage_p90": 0.8141,
+    "offset_p50": 0.215,
+    "offset_p90": 0.3438,
+    "ink_ratio_p50": 0.2163,
+    "aspect_p50": 1.7069
+  },
+  "squiggle": {
+    "samples": 200,
+    "coverage_p10": 0.2344,
+    "coverage_p50": 0.5156,
+    "coverage_p90": 0.8922,
+    "offset_p50": 0.2501,
+    "offset_p90": 0.3907,
+    "ink_ratio_p50": 0.1438,
+    "aspect_p50": 1.7297
+  },
+  "school bus": {
+    "samples": 200,
+    "coverage_p10": 0.4375,
+    "coverage_p50": 0.5469,
+    "coverage_p90": 0.7344,
+    "offset_p50": 0.2345,
+    "offset_p90": 0.2892,
+    "ink_ratio_p50": 0.2803,
+    "aspect_p50": 1.8286
+  },
+  "syringe": {
+    "samples": 200,
+    "coverage_p10": 0.2656,
+    "coverage_p50": 0.6172,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.1994,
+    "offset_p90": 0.3751,
+    "ink_ratio_p50": 0.171,
+    "aspect_p50": 0.9219
+  },
+  "pizza": {
+    "samples": 200,
+    "coverage_p10": 0.625,
+    "coverage_p50": 0.875,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0707,
+    "offset_p90": 0.1955,
+    "ink_ratio_p50": 0.394,
+    "aspect_p50": 1.0159
+  },
+  "flying saucer": {
+    "samples": 200,
+    "coverage_p10": 0.3594,
+    "coverage_p50": 0.5312,
+    "coverage_p90": 0.7969,
+    "offset_p50": 0.2423,
+    "offset_p90": 0.3282,
+    "ink_ratio_p50": 0.219,
+    "aspect_p50": 1.8824
+  },
+  "airplane": {
+    "samples": 200,
+    "coverage_p10": 0.4844,
+    "coverage_p50": 0.7188,
+    "coverage_p90": 0.9375,
+    "offset_p50": 0.1486,
+    "offset_p90": 0.2657,
+    "ink_ratio_p50": 0.2539,
+    "aspect_p50": 1.3913
+  },
+  "toilet": {
+    "samples": 200,
+    "coverage_p10": 0.5453,
+    "coverage_p50": 0.7969,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.1097,
+    "offset_p90": 0.2353,
+    "ink_ratio_p50": 0.2785,
+    "aspect_p50": 0.7969
+  },
+  "bread": {
+    "samples": 200,
+    "coverage_p10": 0.3734,
+    "coverage_p50": 0.7031,
+    "coverage_p90": 0.986,
+    "offset_p50": 0.1564,
+    "offset_p90": 0.3212,
+    "ink_ratio_p50": 0.2106,
+    "aspect_p50": 1.4222
+  },
+  "camouflage": {
+    "samples": 200,
+    "coverage_p10": 0.4984,
+    "coverage_p50": 0.7656,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.1252,
+    "offset_p90": 0.2587,
+    "ink_ratio_p50": 0.3839,
+    "aspect_p50": 1.2191
+  },
+  "horse": {
+    "samples": 200,
+    "coverage_p10": 0.5156,
+    "coverage_p50": 0.7109,
+    "coverage_p90": 0.9375,
+    "offset_p50": 0.1525,
+    "offset_p90": 0.2501,
+    "ink_ratio_p50": 0.2621,
+    "aspect_p50": 1.4067
+  },
+  "cactus": {
+    "samples": 200,
+    "coverage_p10": 0.5469,
+    "coverage_p50": 0.7969,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.1097,
+    "offset_p90": 0.2345,
+    "ink_ratio_p50": 0.2576,
+    "aspect_p50": 0.8281
+  },
+  "popsicle": {
+    "samples": 200,
+    "coverage_p10": 0.3281,
+    "coverage_p50": 0.4922,
+    "coverage_p90": 0.7344,
+    "offset_p50": 0.2618,
+    "offset_p90": 0.3438,
+    "ink_ratio_p50": 0.1791,
+    "aspect_p50": 0.4922
+  },
+  "animal migration": {
+    "samples": 200,
+    "coverage_p10": 0.2344,
+    "coverage_p50": 0.5,
+    "coverage_p90": 0.875,
+    "offset_p50": 0.2579,
+    "offset_p90": 0.3907,
+    "ink_ratio_p50": 0.1547,
+    "aspect_p50": 2.0
+  },
+  "wine glass": {
+    "samples": 200,
+    "coverage_p10": 0.5,
+    "coverage_p50": 0.6562,
+    "coverage_p90": 0.8766,
+    "offset_p50": 0.1799,
+    "offset_p90": 0.2579,
+    "ink_ratio_p50": 0.2118,
+    "aspect_p50": 0.6562
+  },
+  "key": {
+    "samples": 200,
+    "coverage_p10": 0.3594,
+    "coverage_p50": 0.4688,
+    "coverage_p90": 0.7188,
+    "offset_p50": 0.2735,
+    "offset_p90": 0.3282,
+    "ink_ratio_p50": 0.2096,
+    "aspect_p50": 1.561
+  },
+  "eyeglasses": {
+    "samples": 200,
+    "coverage_p10": 0.3281,
+    "coverage_p50": 0.4844,
+    "coverage_p90": 0.7969,
+    "offset_p50": 0.2657,
+    "offset_p90": 0.3438,
+    "ink_ratio_p50": 0.1818,
+    "aspect_p50": 2.0645
+  },
+  "oven": {
+    "samples": 200,
+    "coverage_p10": 0.6562,
+    "coverage_p50": 0.8672,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0746,
+    "offset_p90": 0.1799,
+    "ink_ratio_p50": 0.3705,
+    "aspect_p50": 1.0847
+  },
+  "garden hose": {
+    "samples": 200,
+    "coverage_p10": 0.2812,
+    "coverage_p50": 0.5859,
+    "coverage_p90": 0.9547,
+    "offset_p50": 0.215,
+    "offset_p90": 0.3673,
+    "ink_ratio_p50": 0.1792,
+    "aspect_p50": 1.7069
+  },
+  "mailbox": {
+    "samples": 200,
+    "coverage_p10": 0.4844,
+    "coverage_p50": 0.7188,
+    "coverage_p90": 0.9531,
+    "offset_p50": 0.1486,
+    "offset_p90": 0.2657,
+    "ink_ratio_p50": 0.2303,
+    "aspect_p50": 0.75
+  },
+  "megaphone": {
+    "samples": 200,
+    "coverage_p10": 0.6094,
+    "coverage_p50": 0.8125,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.1019,
+    "offset_p90": 0.2033,
+    "ink_ratio_p50": 0.2524,
+    "aspect_p50": 1.2191
+  },
+  "moustache": {
+    "samples": 200,
+    "coverage_p10": 0.2656,
+    "coverage_p50": 0.3906,
+    "coverage_p90": 0.6266,
+    "offset_p50": 0.3126,
+    "offset_p90": 0.3751,
+    "ink_ratio_p50": 0.1559,
+    "aspect_p50": 2.56
+  },
+  "wristwatch": {
+    "samples": 200,
+    "coverage_p10": 0.2656,
+    "coverage_p50": 0.4531,
+    "coverage_p90": 0.9219,
+    "offset_p50": 0.2814,
+    "offset_p90": 0.3751,
+    "ink_ratio_p50": 0.2069,
+    "aspect_p50": 1.2428
+  },
+  "bracelet": {
+    "samples": 200,
+    "coverage_p10": 0.6546,
+    "coverage_p50": 0.9062,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0552,
+    "offset_p90": 0.1807,
+    "ink_ratio_p50": 0.3279,
+    "aspect_p50": 1.0667
+  },
+  "lion": {
+    "samples": 200,
+    "coverage_p10": 0.7015,
+    "coverage_p50": 0.8906,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.063,
+    "offset_p90": 0.1572,
+    "ink_ratio_p50": 0.3916,
+    "aspect_p50": 1.0667
+  },
+  "bucket": {
+    "samples": 200,
+    "coverage_p10": 0.5781,
+    "coverage_p50": 0.7578,
+    "coverage_p90": 0.9547,
+    "offset_p50": 0.1291,
+    "offset_p90": 0.2189,
+    "ink_ratio_p50": 0.2692,
+    "aspect_p50": 0.7656
+  },
+  "stereo": {
+    "samples": 200,
+    "coverage_p10": 0.4531,
+    "coverage_p50": 0.6094,
+    "coverage_p90": 0.8438,
+    "offset_p50": 0.2033,
+    "offset_p90": 0.2814,
+    "ink_ratio_p50": 0.327,
+    "aspect_p50": 1.641
+  },
+  "speedboat": {
+    "samples": 200,
+    "coverage_p10": 0.2656,
+    "coverage_p50": 0.4062,
+    "coverage_p90": 0.5781,
+    "offset_p50": 0.3048,
+    "offset_p90": 0.3751,
+    "ink_ratio_p50": 0.189,
+    "aspect_p50": 2.4615
+  },
+  "hot air balloon": {
+    "samples": 200,
+    "coverage_p10": 0.5469,
+    "coverage_p50": 0.7031,
+    "coverage_p90": 0.9219,
+    "offset_p50": 0.1564,
+    "offset_p90": 0.2345,
+    "ink_ratio_p50": 0.2245,
+    "aspect_p50": 0.7031
+  },
+  "triangle": {
+    "samples": 200,
+    "coverage_p10": 0.6406,
+    "coverage_p50": 0.875,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0707,
+    "offset_p90": 0.1877,
+    "ink_ratio_p50": 0.2012,
+    "aspect_p50": 1.0
+  },
+  "purse": {
+    "samples": 200,
+    "coverage_p10": 0.7172,
+    "coverage_p50": 0.8906,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.063,
+    "offset_p90": 0.1494,
+    "ink_ratio_p50": 0.2882,
+    "aspect_p50": 1.0
+  },
+  "clarinet": {
+    "samples": 200,
+    "coverage_p10": 0.2656,
+    "coverage_p50": 0.4375,
+    "coverage_p90": 0.8,
+    "offset_p50": 0.2892,
+    "offset_p90": 0.3751,
+    "ink_ratio_p50": 0.1826,
+    "aspect_p50": 1.3765
+  },
+  "sun": {
+    "samples": 200,
+    "coverage_p10": 0.7188,
+    "coverage_p50": 0.875,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0707,
+    "offset_p90": 0.1486,
+    "ink_ratio_p50": 0.2377,
+    "aspect_p50": 1.0667
+  },
+  "jail": {
+    "samples": 200,
+    "coverage_p10": 0.5781,
+    "coverage_p50": 0.8125,
+    "coverage_p90": 0.9688,
+    "offset_p50": 0.1019,
+    "offset_p90": 0.2189,
+    "ink_ratio_p50": 0.3717,
+    "aspect_p50": 1.1636
+  },
+  "backpack": {
+    "samples": 200,
+    "coverage_p10": 0.7031,
+    "coverage_p50": 0.8906,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.063,
+    "offset_p90": 0.1564,
+    "ink_ratio_p50": 0.348,
+    "aspect_p50": 1.0
+  },
+  "mosquito": {
+    "samples": 200,
+    "coverage_p10": 0.4844,
+    "coverage_p50": 0.7734,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.1213,
+    "offset_p90": 0.2657,
+    "ink_ratio_p50": 0.2641,
+    "aspect_p50": 1.2075
+  },
+  "monkey": {
+    "samples": 200,
+    "coverage_p10": 0.639,
+    "coverage_p50": 0.8438,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.0863,
+    "offset_p90": 0.1885,
+    "ink_ratio_p50": 0.3334,
+    "aspect_p50": 1.0408
+  },
+  "raccoon": {
+    "samples": 200,
+    "coverage_p10": 0.4844,
+    "coverage_p50": 0.7969,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.1097,
+    "offset_p90": 0.2657,
+    "ink_ratio_p50": 0.3374,
+    "aspect_p50": 1.2075
+  },
+  "peas": {
+    "samples": 200,
+    "coverage_p10": 0.3906,
+    "coverage_p50": 0.6953,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.1603,
+    "offset_p90": 0.3126,
+    "ink_ratio_p50": 0.2555,
+    "aspect_p50": 1.3197
+  },
+  "bulldozer": {
+    "samples": 200,
+    "coverage_p10": 0.5312,
+    "coverage_p50": 0.6875,
+    "coverage_p90": 0.8766,
+    "offset_p50": 0.1642,
+    "offset_p90": 0.2423,
+    "ink_ratio_p50": 0.2944,
+    "aspect_p50": 1.4545
+  },
+  "owl": {
+    "samples": 200,
+    "coverage_p10": 0.5156,
+    "coverage_p50": 0.6953,
+    "coverage_p90": 0.9391,
+    "offset_p50": 0.1603,
+    "offset_p90": 0.2501,
+    "ink_ratio_p50": 0.3121,
+    "aspect_p50": 0.7031
+  },
+  "star": {
+    "samples": 200,
+    "coverage_p10": 0.6828,
+    "coverage_p50": 0.8906,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.063,
+    "offset_p90": 0.1665,
+    "ink_ratio_p50": 0.2736,
+    "aspect_p50": 1.0323
+  },
+  "sea turtle": {
+    "samples": 200,
+    "coverage_p10": 0.5156,
+    "coverage_p50": 0.7969,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.1097,
+    "offset_p90": 0.2501,
+    "ink_ratio_p50": 0.2866,
+    "aspect_p50": 1.2549
+  },
+  "cannon": {
+    "samples": 200,
+    "coverage_p10": 0.4046,
+    "coverage_p50": 0.6406,
+    "coverage_p90": 0.8906,
+    "offset_p50": 0.1877,
+    "offset_p90": 0.3056,
+    "ink_ratio_p50": 0.2293,
+    "aspect_p50": 1.561
+  },
+  "pencil": {
+    "samples": 200,
+    "coverage_p10": 0.2188,
+    "coverage_p50": 0.3906,
+    "coverage_p90": 0.9375,
+    "offset_p50": 0.3126,
+    "offset_p90": 0.3985,
+    "ink_ratio_p50": 0.1757,
+    "aspect_p50": 0.5078
+  },
+  "shoe": {
+    "samples": 200,
+    "coverage_p10": 0.4219,
+    "coverage_p50": 0.6406,
+    "coverage_p90": 0.9219,
+    "offset_p50": 0.1877,
+    "offset_p90": 0.297,
+    "ink_ratio_p50": 0.2109,
+    "aspect_p50": 1.561
+  },
+  "tractor": {
+    "samples": 200,
+    "coverage_p10": 0.6546,
+    "coverage_p50": 0.8281,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.0941,
+    "offset_p90": 0.1807,
+    "ink_ratio_p50": 0.3112,
+    "aspect_p50": 1.2075
+  },
+  "toothbrush": {
+    "samples": 200,
+    "coverage_p10": 0.2015,
+    "coverage_p50": 0.3125,
+    "coverage_p90": 0.8281,
+    "offset_p50": 0.3516,
+    "offset_p90": 0.4071,
+    "ink_ratio_p50": 0.1642,
+    "aspect_p50": 2.56
+  },
+  "snail": {
+    "samples": 200,
+    "coverage_p10": 0.5156,
+    "coverage_p50": 0.7031,
+    "coverage_p90": 0.9219,
+    "offset_p50": 0.1564,
+    "offset_p90": 0.2501,
+    "ink_ratio_p50": 0.3191,
+    "aspect_p50": 1.4222
+  },
+  "grapes": {
+    "samples": 200,
+    "coverage_p10": 0.5781,
+    "coverage_p50": 0.7969,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.1097,
+    "offset_p90": 0.2189,
+    "ink_ratio_p50": 0.345,
+    "aspect_p50": 0.9219
+  },
+  "watermelon": {
+    "samples": 200,
+    "coverage_p10": 0.4844,
+    "coverage_p50": 0.6719,
+    "coverage_p90": 0.9688,
+    "offset_p50": 0.1721,
+    "offset_p90": 0.2657,
+    "ink_ratio_p50": 0.2901,
+    "aspect_p50": 1.4884
+  },
+  "roller coaster": {
+    "samples": 200,
+    "coverage_p10": 0.3281,
+    "coverage_p50": 0.5156,
+    "coverage_p90": 0.8281,
+    "offset_p50": 0.2501,
+    "offset_p90": 0.3438,
+    "ink_ratio_p50": 0.1903,
+    "aspect_p50": 1.9394
+  },
+  "tiger": {
+    "samples": 200,
+    "coverage_p10": 0.4531,
+    "coverage_p50": 0.6562,
+    "coverage_p90": 0.9531,
+    "offset_p50": 0.1799,
+    "offset_p90": 0.2814,
+    "ink_ratio_p50": 0.3167,
+    "aspect_p50": 1.5238
+  },
+  "skyscraper": {
+    "samples": 200,
+    "coverage_p10": 0.2969,
+    "coverage_p50": 0.4844,
+    "coverage_p90": 0.736,
+    "offset_p50": 0.2657,
+    "offset_p90": 0.3595,
+    "ink_ratio_p50": 0.1723,
+    "aspect_p50": 0.4922
+  },
+  "sword": {
+    "samples": 200,
+    "coverage_p10": 0.3906,
+    "coverage_p50": 0.5781,
+    "coverage_p90": 0.9547,
+    "offset_p50": 0.2189,
+    "offset_p90": 0.3126,
+    "ink_ratio_p50": 0.1941,
+    "aspect_p50": 0.5781
+  },
+  "windmill": {
+    "samples": 200,
+    "coverage_p10": 0.6094,
+    "coverage_p50": 0.8125,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.1019,
+    "offset_p90": 0.2033,
+    "ink_ratio_p50": 0.3076,
+    "aspect_p50": 0.8125
+  },
+  "cello": {
+    "samples": 200,
+    "coverage_p10": 0.4375,
+    "coverage_p50": 0.5625,
+    "coverage_p90": 0.7828,
+    "offset_p50": 0.2267,
+    "offset_p90": 0.2892,
+    "ink_ratio_p50": 0.2599,
+    "aspect_p50": 0.5625
+  },
+  "bed": {
+    "samples": 200,
+    "coverage_p10": 0.4531,
+    "coverage_p50": 0.7031,
+    "coverage_p90": 0.9531,
+    "offset_p50": 0.1564,
+    "offset_p90": 0.2814,
+    "ink_ratio_p50": 0.2509,
+    "aspect_p50": 1.4222
+  },
+  "smiley face": {
+    "samples": 200,
+    "coverage_p10": 0.7328,
+    "coverage_p50": 0.9219,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0475,
+    "offset_p90": 0.1416,
+    "ink_ratio_p50": 0.2782,
+    "aspect_p50": 1.0
+  },
+  "wine bottle": {
+    "samples": 200,
+    "coverage_p10": 0.375,
+    "coverage_p50": 0.5,
+    "coverage_p90": 0.7188,
+    "offset_p50": 0.2579,
+    "offset_p90": 0.3204,
+    "ink_ratio_p50": 0.1772,
+    "aspect_p50": 0.5
+  },
+  "piano": {
+    "samples": 200,
+    "coverage_p10": 0.3594,
+    "coverage_p50": 0.625,
+    "coverage_p90": 0.9531,
+    "offset_p50": 0.1955,
+    "offset_p90": 0.3282,
+    "ink_ratio_p50": 0.2895,
+    "aspect_p50": 1.6
+  },
+  "rake": {
+    "samples": 200,
+    "coverage_p10": 0.4031,
+    "coverage_p50": 0.6719,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.1721,
+    "offset_p90": 0.3064,
+    "ink_ratio_p50": 0.1654,
+    "aspect_p50": 0.7734
+  },
+  "teapot": {
+    "samples": 200,
+    "coverage_p10": 0.5469,
+    "coverage_p50": 0.7109,
+    "coverage_p90": 0.9391,
+    "offset_p50": 0.1525,
+    "offset_p90": 0.2345,
+    "ink_ratio_p50": 0.2475,
+    "aspect_p50": 1.3913
+  },
+  "rollerskates": {
+    "samples": 200,
+    "coverage_p10": 0.6859,
+    "coverage_p50": 0.8828,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0668,
+    "offset_p90": 0.165,
+    "ink_ratio_p50": 0.2914,
+    "aspect_p50": 1.008
+  },
+  "flamingo": {
+    "samples": 200,
+    "coverage_p10": 0.5938,
+    "coverage_p50": 0.7969,
+    "coverage_p90": 0.986,
+    "offset_p50": 0.1097,
+    "offset_p90": 0.2111,
+    "ink_ratio_p50": 0.2235,
+    "aspect_p50": 0.8125
+  },
+  "carrot": {
+    "samples": 200,
+    "coverage_p10": 0.3281,
+    "coverage_p50": 0.4844,
+    "coverage_p90": 0.8594,
+    "offset_p50": 0.2657,
+    "offset_p90": 0.3438,
+    "ink_ratio_p50": 0.2041,
+    "aspect_p50": 0.4922
+  },
+  "power outlet": {
+    "samples": 200,
+    "coverage_p10": 0.6094,
+    "coverage_p50": 0.8281,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.0941,
+    "offset_p90": 0.2033,
+    "ink_ratio_p50": 0.3337,
+    "aspect_p50": 0.8906
+  },
+  "snowman": {
+    "samples": 200,
+    "coverage_p10": 0.5296,
+    "coverage_p50": 0.6875,
+    "coverage_p90": 0.9062,
+    "offset_p50": 0.1642,
+    "offset_p90": 0.2431,
+    "ink_ratio_p50": 0.2381,
+    "aspect_p50": 0.6875
+  },
+  "tooth": {
+    "samples": 200,
+    "coverage_p10": 0.5922,
+    "coverage_p50": 0.8281,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0941,
+    "offset_p90": 0.2119,
+    "ink_ratio_p50": 0.2472,
+    "aspect_p50": 0.8594
+  },
+  "paintbrush": {
+    "samples": 200,
+    "coverage_p10": 0.3125,
+    "coverage_p50": 0.6094,
+    "coverage_p90": 0.9219,
+    "offset_p50": 0.2033,
+    "offset_p90": 0.3516,
+    "ink_ratio_p50": 0.2464,
+    "aspect_p50": 0.625
+  },
+  "jacket": {
+    "samples": 200,
+    "coverage_p10": 0.5781,
+    "coverage_p50": 0.7656,
+    "coverage_p90": 0.9704,
+    "offset_p50": 0.1252,
+    "offset_p90": 0.2189,
+    "ink_ratio_p50": 0.2929,
+    "aspect_p50": 1.28
+  },
+  "see saw": {
+    "samples": 200,
+    "coverage_p10": 0.3281,
+    "coverage_p50": 0.5156,
+    "coverage_p90": 0.7969,
+    "offset_p50": 0.2501,
+    "offset_p90": 0.3438,
+    "ink_ratio_p50": 0.1523,
+    "aspect_p50": 1.9394
+  },
+  "stairs": {
+    "samples": 200,
+    "coverage_p10": 0.5938,
+    "coverage_p50": 0.8203,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.098,
+    "offset_p90": 0.2111,
+    "ink_ratio_p50": 0.1243,
+    "aspect_p50": 1.1328
+  },
+  "skull": {
+    "samples": 200,
+    "coverage_p10": 0.7031,
+    "coverage_p50": 0.875,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0707,
+    "offset_p90": 0.1564,
+    "ink_ratio_p50": 0.3322,
+    "aspect_p50": 0.9062
+  },
+  "picture frame": {
+    "samples": 200,
+    "coverage_p10": 0.6703,
+    "coverage_p50": 0.875,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0707,
+    "offset_p90": 0.1729,
+    "ink_ratio_p50": 0.4095,
+    "aspect_p50": 1.0492
+  },
+  "elephant": {
+    "samples": 200,
+    "coverage_p10": 0.5469,
+    "coverage_p50": 0.7109,
+    "coverage_p90": 0.9531,
+    "offset_p50": 0.1525,
+    "offset_p90": 0.2345,
+    "ink_ratio_p50": 0.2835,
+    "aspect_p50": 1.3913
+  },
+  "hot dog": {
+    "samples": 200,
+    "coverage_p10": 0.3125,
+    "coverage_p50": 0.4688,
+    "coverage_p90": 0.7812,
+    "offset_p50": 0.2735,
+    "offset_p90": 0.3516,
+    "ink_ratio_p50": 0.2593,
+    "aspect_p50": 2.1333
+  },
+  "hand": {
+    "samples": 200,
+    "coverage_p10": 0.6406,
+    "coverage_p50": 0.8672,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0746,
+    "offset_p90": 0.1877,
+    "ink_ratio_p50": 0.2895,
+    "aspect_p50": 1.0
+  },
+  "angel": {
+    "samples": 200,
+    "coverage_p10": 0.7015,
+    "coverage_p50": 0.8594,
+    "coverage_p90": 0.986,
+    "offset_p50": 0.0785,
+    "offset_p90": 0.1572,
+    "ink_ratio_p50": 0.3437,
+    "aspect_p50": 1.0
+  },
+  "apple": {
+    "samples": 200,
+    "coverage_p10": 0.7031,
+    "coverage_p50": 0.875,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0707,
+    "offset_p90": 0.1564,
+    "ink_ratio_p50": 0.2256,
+    "aspect_p50": 0.9062
+  },
+  "bowtie": {
+    "samples": 200,
+    "coverage_p10": 0.4375,
+    "coverage_p50": 0.6406,
+    "coverage_p90": 0.875,
+    "offset_p50": 0.1877,
+    "offset_p90": 0.2892,
+    "ink_ratio_p50": 0.225,
+    "aspect_p50": 1.561
+  },
+  "leaf": {
+    "samples": 200,
+    "coverage_p10": 0.4219,
+    "coverage_p50": 0.6719,
+    "coverage_p90": 0.9391,
+    "offset_p50": 0.1721,
+    "offset_p90": 0.297,
+    "ink_ratio_p50": 0.2513,
+    "aspect_p50": 0.7344
+  },
+  "underwear": {
+    "samples": 200,
+    "coverage_p10": 0.4688,
+    "coverage_p50": 0.6328,
+    "coverage_p90": 0.8281,
+    "offset_p50": 0.1916,
+    "offset_p90": 0.2735,
+    "ink_ratio_p50": 0.2026,
+    "aspect_p50": 1.561
+  },
+  "hourglass": {
+    "samples": 200,
+    "coverage_p10": 0.5938,
+    "coverage_p50": 0.7812,
+    "coverage_p90": 0.9844,
+    "offset_p50": 0.1174,
+    "offset_p90": 0.2111,
+    "ink_ratio_p50": 0.2542,
+    "aspect_p50": 0.7812
+  },
+  "shovel": {
+    "samples": 200,
+    "coverage_p10": 0.3734,
+    "coverage_p50": 0.5547,
+    "coverage_p90": 0.9375,
+    "offset_p50": 0.2306,
+    "offset_p90": 0.3212,
+    "ink_ratio_p50": 0.1787,
+    "aspect_p50": 0.5625
+  },
+  "snake": {
+    "samples": 200,
+    "coverage_p10": 0.264,
+    "coverage_p50": 0.4844,
+    "coverage_p90": 0.9219,
+    "offset_p50": 0.2657,
+    "offset_p90": 0.3759,
+    "ink_ratio_p50": 0.1633,
+    "aspect_p50": 2.0645
+  },
+  "shorts": {
+    "samples": 200,
+    "coverage_p10": 0.6094,
+    "coverage_p50": 0.7656,
+    "coverage_p90": 0.9531,
+    "offset_p50": 0.1252,
+    "offset_p90": 0.2033,
+    "ink_ratio_p50": 0.2689,
+    "aspect_p50": 1.3061
+  },
+  "grass": {
+    "samples": 200,
+    "coverage_p10": 0.2031,
+    "coverage_p50": 0.4609,
+    "coverage_p90": 0.8454,
+    "offset_p50": 0.2774,
+    "offset_p90": 0.4063,
+    "ink_ratio_p50": 0.202,
+    "aspect_p50": 2.1701
+  },
+  "radio": {
+    "samples": 200,
+    "coverage_p10": 0.6078,
+    "coverage_p50": 0.8594,
+    "coverage_p90": 1.0,
+    "offset_p50": 0.0785,
+    "offset_p90": 0.2041,
+    "ink_ratio_p50": 0.319,
+    "aspect_p50": 1.1228
+  }
+}
