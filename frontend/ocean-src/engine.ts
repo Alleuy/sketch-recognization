@@ -21,6 +21,7 @@ export class OceanEngine {
   private intersectionObserver: IntersectionObserver;
   private disposed = false;
   private paused = false;
+  clickRipple = false;
   private speed = 0.65;
 
   constructor(private canvas: HTMLCanvasElement, sharks?: SharkSpec[]) {
@@ -167,7 +168,7 @@ export class OceanEngine {
 
   private onPointerDown = (e: PointerEvent) => {
     const { x, y, inside } = this.toLocal(e);
-    if (inside && !this.reducedMotion.matches) this.world.splash(x, y);
+    if (inside && this.clickRipple && !this.reducedMotion.matches) this.world.splash(x, y);
   };
 
   private onPointerLeave = () => {

@@ -77,7 +77,7 @@ function init() {
       lines: '线条沿鱼身方向排列，像游动的编织线稿。',
       hanzi: '一、十、川、水、魚、鯊，以笔画疏密表现层次。',
     };
-    let renderMode: RenderMode = 'ascii';
+    let renderMode: RenderMode = 'braille';
     function applyRenderMode(mode: RenderMode) {
       renderMode = mode;
       engine.setRenderMode(mode);
@@ -94,7 +94,7 @@ function init() {
       storage.set('ascii-ocean-render-mode', mode);
     }
     const savedMode = storage.get('ascii-ocean-render-mode') as RenderMode | null;
-    applyRenderMode(savedMode && renderModes.includes(savedMode) ? savedMode : 'ascii');
+    applyRenderMode(savedMode && renderModes.includes(savedMode) ? savedMode : 'braille');
     $<HTMLSelectElement>('render-mode').addEventListener('change', e => applyRenderMode((e.target as HTMLSelectElement).value as RenderMode));
     $('style-toggle').addEventListener('click', () => applyRenderMode(renderModes[(renderModes.indexOf(renderMode) + 1) % renderModes.length]));
 
@@ -188,9 +188,22 @@ function init() {
       engine.setSharks(roster);
       status(`${names[kind]}，游进了这片海。`);
     });
-    $('ripple').addEventListener('click', () => {
-      engine.ripple(window.innerWidth * .5, window.innerHeight * .67);
-      status('轻轻碰一下，水面就有了回响。');
+    // 涟漪模式开关：开启后按钮高亮，水面周期性泛起涟漪；再点关闭
+    const rippleBtn = $('ripple');
+    let rippleTimer: number | undefined;
+    const rippleOnce = () => engine.ripple(window.innerWidth * (.3 + Math.random() * .4), window.innerHeight * (.5 + Math.random() * .3));
+    rippleBtn.addEventListener('click', () => {
+      const on = rippleBtn.classList.toggle('active');
+      if (on) {
+        engine.clickRipple = true;
+        rippleOnce();
+        rippleTimer = window.setInterval(rippleOnce, 1800);
+        status('涟漪模式开启，点击水面查看动效。');
+      } else {
+        engine.clickRipple = false;
+        window.clearInterval(rippleTimer);
+        status('涟漪模式关闭。');
+      }
     });
 
     win.__oceanAPI = {

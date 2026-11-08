@@ -54,7 +54,7 @@ export default function HomePage({ homeRef, onStart }){
                         </header>
 
                         <div className="setting-label"><span>CHAR STYLE</span><span>字符风格</span></div>
-                        <select id="render-mode">
+                        <select id="render-mode" defaultValue="braille">
                             <option value="ascii">ASCII 原始字符</option>
                             <option value="type">纯字符</option>
                             <option value="braille">盲文点阵</option>
