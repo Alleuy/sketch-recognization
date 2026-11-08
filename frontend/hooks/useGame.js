@@ -59,11 +59,13 @@ export default function useGame({ drawing, homeRef, gameRef }){
         setTimeout(() => {
             home.style.display = "none";
             if(gameRef.current) gameRef.current.classList.add("active");
+            window.__oceanAPI?.pause?.(true);  // 海洋随主页隐藏暂停，省 CPU
         }, 600);
     }, [homeRef, gameRef]);
 
     const goHome = useCallback(() => {
         if(gameRef.current) gameRef.current.classList.remove("active");
+        window.__oceanAPI?.pause?.(false);  // 返回主页时海洋恢复游动
         setTimeout(() => {
             const home = homeRef.current;
             if(!home) return;
