@@ -1,0 +1,93 @@
+/* Character ocean styles, forked from https://github.com/jiezi1234/character-ocean (MIT).
+   Scoped for the sketch homepage: every global rule now lives under .ocean-root,
+   fonts are loaded from /ocean/fonts instead of base64. */
+
+@font-face{font-family:Geist;src:url('/ocean/fonts/sans.ttf') format('truetype');font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:Geist;src:url('/ocean/fonts/light.ttf') format('truetype');font-weight:200;font-style:normal;font-display:swap}
+@font-face{font-family:'Geist Mono';src:url('/ocean/fonts/mono.ttf') format('truetype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:OceanHanzi;src:url('/ocean/fonts/hanzi.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
+
+.mode-button{height:29px;min-width:49px;padding:0 7px;border-radius:7px;background:transparent;color:var(--muted);font-size:9px;letter-spacing:.2px;transition:background .2s,color .2s}.mode-button:hover{background:var(--hover);color:var(--ink)}.mode-description{font-size:10px;line-height:1.7;color:var(--muted);margin:8px 0 0;min-height:34px}.settings-panel{max-height:calc(100dvh - 100px);overflow-y:auto;scrollbar-width:thin}
+
+/* Theme tokens: scoped to the homepage root instead of :root. */
+.ocean-root{color-scheme:light;--page:#fff;--ink:#30332f;--muted:#999b94;--faint:#b2b4ac;--glass:rgba(239,240,233,.44);--glass-strong:rgba(248,248,244,.86);--border:rgba(105,111,91,.13);--hover:rgba(92,101,77,.07);--shadow:0 10px 32px rgba(55,62,43,.055),0 2px 4px rgba(55,62,43,.035);--glow:rgba(211,215,189,.22);--accent:rgba(92,101,77,.12);--accent-ink:#3d4433;--accent-hover:rgba(92,101,77,.2)}
+.ocean-root{position:fixed;inset:0;z-index:2;overflow:hidden;background:var(--page);color:var(--ink);font:300 14px Geist,'Segoe UI',sans-serif;transition:background .45s,color .45s}
+.ocean-root button,.ocean-root input,.ocean-root textarea,.ocean-root select{font:inherit}
+.ocean-root button{color:inherit;cursor:pointer;border:0}
+.ocean-root button,.ocean-root textarea,.ocean-root select,.ocean-root input{-webkit-tap-highlight-color:transparent}
+.ocean-root button:focus-visible,.ocean-root a:focus-visible,.ocean-root select:focus-visible,.ocean-root input:focus-visible{outline:2px solid #819094;outline-offset:4px}
+.ocean-root button:disabled{cursor:default}
+.ocean-root svg{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round}
+.ocean-root .mono{font-family:'Geist Mono',monospace;font-size:10px;font-weight:600}
+.ocean-root .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+#ocean{position:fixed;inset:0;display:block;width:100%;height:100%;font-family:'Geist Mono',monospace;filter:invert(1) hue-rotate(180deg) saturate(.48);opacity:.78;transition:filter .55s,opacity .55s}
+.soft-light{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 32% 41% at 50% 52%,var(--glow),transparent 100%)}
+.ocean-root .glass{background:var(--glass);border:1px solid var(--border);box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.3);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}
+
+.hero{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(770px,calc(100% - 48px));z-index:2}
+.hero h1{font-size:clamp(34px,4.7vw,60px);font-weight:200;letter-spacing:1px;line-height:1.13;text-align:center;margin:0 0 14px}
+.hero .subtitle{text-align:center;color:var(--muted);font-size:14px;letter-spacing:2.5px;margin:0 0 34px;font-weight:300}
+.thought-status{position:absolute;left:0;right:0;top:100%;margin:18px 0 0;text-align:center;font-size:12px;color:#8c9380;min-height:18px;opacity:0;transform:translateY(-4px);transition:opacity .3s,transform .3s}.thought-status.visible{opacity:1;transform:none}
+
+.bottom-bar{position:fixed;bottom:max(22px,env(safe-area-inset-bottom));left:28px;right:28px;display:flex;align-items:center;justify-content:space-between;z-index:4;pointer-events:none}.bottom-bar a,.bottom-bar button,.bottom-bar .popover{pointer-events:auto}.credit{color:#a3a799;text-decoration:none;letter-spacing:1.4px;font-size:9px;opacity:.7;transition:opacity .2s}.credit:hover{opacity:1}.credit span{font-size:12px;margin-left:5px}.ocean-controls{display:flex;align-items:center;gap:18px;position:relative}.interaction-hint{color:#adb2a3;font-size:8px;letter-spacing:.1px;opacity:.65}.control-dock{display:flex;align-items:center;padding:3px;border-radius:10px;background:rgba(245,246,241,.55)}.control-dock .icon-button{width:29px;height:29px}.control-dock svg{width:15px;height:15px}.dock-divider{width:1px;height:12px;background:var(--border);margin:0 3px}
+
+.popover{position:absolute;border-radius:14px;padding:20px;width:286px;background:var(--glass-strong);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 16px 50px rgba(49,57,37,.1);animation:float-in .18s ease-out}.popover[hidden]{display:none}.settings-panel{bottom:50px;right:0}.panel-heading{display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--ink);margin-bottom:20px;letter-spacing:-.25px}.panel-heading .mono{color:var(--muted);font-size:9px}.panel-footnote{font-size:10px;line-height:1.8;color:var(--muted);margin:18px 0 0;letter-spacing:.1px}.setting-label{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--ink);margin:19px 0 11px}.setting-label span{font:8px 'Geist Mono',monospace;color:var(--faint);letter-spacing:1px}
+.ocean-root select{display:block;width:100%;height:38px;padding:0 9px;border:1px solid var(--border);border-radius:7px;background:var(--hover);color:var(--ink);font-size:12px;cursor:pointer}
+.ocean-root input[type=range]{width:100%;height:4px;margin:8px 0 4px;accent-color:#8d9c83;cursor:pointer}
+@keyframes float-in{from{opacity:0;translate:0 5px}to{opacity:1;translate:0 0}}
+@media(min-width:1600px){.hero h1{font-size:64px}.hero{width:800px}}
+
+/* A cool, low-glare palette for the night ocean. */
+.ocean-root[data-theme=dark]{
+  color-scheme:dark;
+  --page:#07111a;--ink:#d7e5ec;--muted:#9badb9;--faint:#8097a5;
+  --glass:rgba(17,34,47,.66);--glass-strong:rgba(16,31,43,.95);
+  --border:rgba(151,193,210,.15);--hover:rgba(132,195,207,.1);
+  --shadow:0 16px 54px rgba(0,5,12,.32);--glow:rgba(41,103,119,.13);
+  --accent:rgba(129,192,204,.14);--accent-ink:#d4edf0;--accent-hover:rgba(129,192,204,.24);
+}
+#ocean{transition:opacity .4s ease}
+.ocean-root .glass{transition:background-color .35s ease,border-color .35s ease,box-shadow .35s ease}
+.ocean-root[data-theme=dark] #ocean{filter:none;opacity:1}
+.ocean-root[data-theme=dark] .glass{box-shadow:var(--shadow),inset 0 1px 0 rgba(182,220,234,.055)}
+.ocean-root[data-theme=dark] .hero h1{color:#dce8ed;text-shadow:0 2px 34px rgba(107,177,196,.14)}
+.ocean-root[data-theme=dark] .hero .subtitle{color:#8fb2c0}
+.ocean-root[data-theme=dark] .icon-button{color:#9db5c2}
+.ocean-root[data-theme=dark] .icon-button:hover{color:#d4edf0;background:rgba(129,192,204,.12)}
+.ocean-root[data-theme=dark] .thought-status{color:#a9ced2}
+.ocean-root[data-theme=dark] .control-dock{background:rgba(15,31,43,.78);border-color:rgba(151,193,210,.15)}
+.ocean-root[data-theme=dark] .mode-button{color:#abc5d0}
+.ocean-root[data-theme=dark] .mode-button:hover{color:#daf0f1}
+.ocean-root[data-theme=dark] .popover{background:rgba(16,31,43,.96);border-color:rgba(151,193,210,.2);box-shadow:0 22px 65px rgba(0,5,13,.44),inset 0 1px 0 rgba(182,220,234,.055)}
+.ocean-root[data-theme=dark] select{background:rgba(111,166,185,.08);border-color:rgba(151,193,210,.16);color:#d2e1e9}
+.ocean-root[data-theme=dark] select option,.ocean-root[data-theme=dark] select optgroup{background:#122431;color:#d2e1e9}
+.ocean-root[data-theme=dark] input[type=range]{accent-color:#8bbfc8}
+.ocean-root[data-theme=dark] button:focus-visible,.ocean-root[data-theme=dark] a:focus-visible,.ocean-root[data-theme=dark] select:focus-visible,.ocean-root[data-theme=dark] input:focus-visible{outline-color:#86c0ca}
+.ocean-root[data-theme=dark] .credit{color:#839eaf;opacity:.9}
+.ocean-root[data-theme=dark] .interaction-hint{color:#8199a8;opacity:.85}
+.ocean-root[data-theme=dark] #theme{color:#d6c8ab;background:rgba(190,171,124,.065)}
+
+.ocean-theme-veil{position:fixed;inset:0;display:block;width:100%;height:100%;pointer-events:none;z-index:0}
+
+/* Homepage start panel: same silhouette as the original centerpieces. */
+.center-panel{position:relative;width:100%;height:96px;padding:0 28px;border-radius:17px;display:flex;align-items:center;gap:22px;transition:border-color .2s,box-shadow .2s}
+.center-panel[hidden]{display:none}
+.center-panel:focus-within{border-color:rgba(105,111,91,.26);box-shadow:0 12px 40px rgba(55,62,43,.07),0 0 0 3px rgba(121,128,107,.025)}
+.icon-button{display:grid;place-items:center;flex-shrink:0;width:32px;height:32px;background:transparent;border-radius:7px;color:#9b9e92;transition:color .2s,background .2s,transform .2s}
+.icon-button:hover{background:var(--hover);color:var(--ink)}.icon-button:active{transform:scale(.92)}.icon-button svg{width:19px;height:19px}
+.control-dock .icon-button svg{width:15px;height:15px}
+.start-panel{justify-content:space-between}
+.start-copy{min-width:0}
+.start-label{color:var(--faint);letter-spacing:2.2px;margin:0 0 7px;font-size:8px}
+.start-title{margin:0;font-size:16px;letter-spacing:-.3px;color:var(--ink)}
+#startBtn{flex-shrink:0;height:46px;padding:0 30px;border-radius:10px;background:var(--accent);color:var(--accent-ink);font-size:15px;font-weight:400;letter-spacing:2px;transition:background .25s,transform .25s,box-shadow .25s}
+#startBtn:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 10px 26px rgba(40,80,96,.18)}
+#startBtn:active{transform:translateY(0) scale(.98)}
+.ocean-root[data-theme=dark] .center-panel{background:linear-gradient(145deg,rgba(24,44,58,.64),rgba(14,29,41,.6));border-color:rgba(151,193,210,.18);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+.ocean-root[data-theme=dark] .center-panel:focus-within{border-color:rgba(129,193,206,.48);box-shadow:0 14px 50px rgba(0,7,16,.3),0 0 0 3px rgba(101,181,197,.065),inset 0 1px 0 rgba(191,229,239,.07)}
+.ocean-actions{display:flex;gap:10px;margin-top:18px}.ocean-actions button{display:flex;align-items:center;justify-content:center;gap:7px;flex:1;background:var(--hover);border-radius:7px;height:34px;color:var(--muted);font-size:11px}.ocean-actions button:hover{color:var(--ink)}.ocean-actions svg{width:15px;height:15px}
+@media(max-width:760px){.interaction-hint{display:none}.center-panel{gap:18px;padding:0 24px}.start-panel{gap:14px}#startBtn{padding:0 22px}}
+@media(max-width:640px){.hero{width:calc(100% - 36px);top:49%}.hero h1{font-size:clamp(29px,7.8vw,42px);letter-spacing:.6px;margin-bottom:12px}.hero .subtitle{margin-bottom:26px;font-size:12px}.bottom-bar{left:19px;right:19px;bottom:max(20px,env(safe-area-inset-bottom))}.interaction-hint{display:none}.credit{font-size:8px}.soft-light{background:radial-gradient(ellipse 70% 35% at 50% 49%,var(--glow),transparent 100%)}.settings-panel{width:min(286px,calc(100vw - 38px))}.center-panel{height:92px;padding:0 20px;border-radius:15px;gap:14px}.start-title{font-size:14px}#startBtn{height:42px;padding:0 20px;font-size:13px}.bottom-bar{gap:16px}.ocean-controls{min-width:0}}
+@media(max-width:430px){.bottom-bar .credit{display:none}.bottom-bar{justify-content:flex-end}.start-copy{display:none}.start-panel{justify-content:center}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
