@@ -91,7 +91,7 @@ export default function HomePage({ homeRef, onStart }){
                         <div className="ocean-actions">
                             <button id="add-shark">
                                 <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-                                加一位访客
+                                添加一只鱼
                             </button>
                             <button id="ripple">
                                 <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="8.5" strokeDasharray="3 4"/></svg>
